@@ -2,62 +2,74 @@ from django.db import models
 
 # Create your models here.
 class Contact(models.Model):
-    name = models.CharField(max_length=255)
-    position = models.CharField(max_length=255)
-    tel = models.CharField(max_length=255)
-    email = models.CharField(unique=True)
-    line = models.CharField(max_length=255)
-    other = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
-    company_address = models.ForeignKey('Client', on_delete=models.CASCADE)
+    name = models.CharField(max_length=255, blank=True, null=True)
+    position = models.CharField(max_length=255, blank=True, null=True)
+    tel = models.CharField(max_length=255, blank=True, null=True)
+    email = models.CharField(max_length=255, blank=True, null=True)
+    line = models.CharField(max_length=255, blank=True, null=True)
+    other = models.CharField(max_length=255, blank=True, null=True)
+    address1 = models.CharField(max_length=255, blank=True, null=True)
+    address2 = models.ForeignKey('Client', on_delete=models.CASCADE, blank=True, null=True, related_name='company_address')
+
+    class Meta:
+        db_table = 'contact'
 
 class Client(models.Model):
-    code = models.CharField(max_length=255)
-    company_name = models.CharField(max_length=255)
-    tax_id = models.CharField(max_length=13)
+    code = models.CharField(max_length=255, blank=True, null=True)
+    company_name = models.CharField(max_length=255, blank=True, null=True)
+    tin_id = models.CharField(max_length=13, blank=True, null=True)
     create_data = models.DateField()
-    service_fee = models.DecimalField(max_digits=6, decimal_places=2)
-    address = models.CharField(max_length=255)
-    province = models.ForeignKey()
-    district = models.ForeignKey()
-    subdistrict = models.ForeignKey()
-    postcode = models.ForeignKey()
-    channal = models.CharField(max_length=255)
+    service_fee = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    channal = models.CharField(max_length=255, blank=True, null=True)
     detail = models.TextField()
-    regis_vat = models.ForeignKey()
-    regis_sbt = models.ForeignKey()
-    regis_sso = models.ForeignKey()
-    regis_e_filling = models.ForeignKey()
-    regis_other = models.ForeignKey()
-    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
+    register_vat = models.ForeignKey('RegisterClient', on_delete=models.CASCADE, blank=True, null=True)
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        db_table = 'client'
 
 class Country(models.Model):
-    name_th = models.CharField(max_length=255)
-    name_en = models.CharField(max_length=255)
+    name_th = models.CharField(max_length=255, blank=True, null=True)
+    name_en = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        db_table = 'country'
 
 class Geography(models.Model):
-    name_th = models.CharField(max_length=255)
-    name_en = models.CharField(max_length=255)
+    name_th = models.CharField(max_length=255, blank=True, null=True)
+    name_en = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        db_table = 'geography'
 
 class Province(models.Model):
-    name_th = models.CharField(max_length=255)
-    name_en = models.CharField(max_length=255)
-    geography = models.ForeignKey(Geography, on_delete=models.CASCADE)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    name_th = models.CharField(max_length=255, blank=True, null=True)
+    name_en = models.CharField(max_length=255, blank=True, null=True)
+    geography = models.ForeignKey(Geography, on_delete=models.CASCADE, blank=True, null=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        db_table = 'province'
 
 class District(models.Model):
-    name_th = models.CharField(max_length=255)
-    name_en = models.CharField(max_length=255)
-    province = models.ForeignKey(Province, on_delete=models.CASCADE)
+    name_th = models.CharField(max_length=255, blank=True, null=True)
+    name_en = models.CharField(max_length=255, blank=True, null=True)
+    province = models.ForeignKey(Province, on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        db_table = 'district'
 
 class Subdistrict(models.Model):
-    name_th = models.CharField(max_length=255)
-    name_en = models.CharField(max_length=255)
-    postcode = models.IntegerField(max_length=5)
-    district = models.ForeignKey(District, on_delete=models.CASCADE)
+    name_th = models.CharField(max_length=255, blank=True, null=True)
+    name_en = models.CharField(max_length=255, blank=True, null=True)
+    postcode = models.IntegerField()
+    district = models.ForeignKey(District, on_delete=models.CASCADE, blank=True, null=True)
 
-class Register(models.Model):
-    client = models.ForeignKey('Client', on_delete=models.CASCADE)
+    class Meta:
+        db_table = 'subdistrict'
+
+class RegisterClient(models.Model):
     regis_vat = models.BooleanField(default=False)
     date_vat = models.DateField()
     regis_sbt = models.BooleanField(default=False)
@@ -68,11 +80,25 @@ class Register(models.Model):
     date_e_filling = models.DateField()
     regis_other = models.BooleanField(default=False)
     date_other = models.DateField()
+    password_client = models.ForeignKey('PasswordClient', on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        db_table = 'register_client'
 
 class PasswordClient(models.Model):
-    regis_type = models.OneToOneField('Register', on_delete=models.CASCADE)
-    username = models.CharField(max_length=255)
-    password = models.CharField(max_length=128)
+    regis_type = models.ForeignKey('TypeRegister', on_delete=models.CASCADE, blank=True, null=True)
+    username = models.CharField(max_length=255, blank=True, null=True)
+    password = models.CharField(max_length=128, blank=True, null=True)
+
+    class Meta:
+        db_table = 'password_client'
+
+class TypeRegister(models.Model):
+    name_th = models.CharField(max_length=255, blank=True, null=True)
+    name_en = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        db_table = 'type_register'
 
 # class User(models.Model):
 #     username = models.CharField(max_length=30, unique=True)
