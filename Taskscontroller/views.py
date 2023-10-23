@@ -82,6 +82,8 @@ def RegisterForm(request):
     else:
         # Handle the case where 'id' is None
         return render(request, 'tasks/test.html')
+    
+    
 
 
 
