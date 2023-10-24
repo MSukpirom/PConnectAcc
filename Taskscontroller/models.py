@@ -18,11 +18,11 @@ class Client(models.Model):
     code = models.CharField(max_length=255, blank=True, null=True)
     company_name = models.CharField(max_length=255, blank=True, null=True)
     tin_id = models.CharField(max_length=13, blank=True, null=True)
-    create_data = models.DateField()
+    create_data = models.DateField(blank=True, null=True)
     service_fee = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     channal = models.CharField(max_length=255, blank=True, null=True)
-    detail = models.TextField()
+    detail = models.TextField(blank=True, null=True)
     register_vat = models.ForeignKey('RegisterClient', on_delete=models.CASCADE, blank=True, null=True)
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE, blank=True, null=True)
 
@@ -70,16 +70,16 @@ class Subdistrict(models.Model):
         db_table = 'subdistrict'
 
 class RegisterClient(models.Model):
-    regis_vat = models.BooleanField(default=False)
-    date_vat = models.DateField()
-    regis_sbt = models.BooleanField(default=False)
-    date_sbt = models.DateField()
-    regis_sso = models.BooleanField(default=False)
-    date_sso = models.DateField()
-    regis_e_filling = models.BooleanField(default=False)
-    date_e_filling = models.DateField()
-    regis_other = models.BooleanField(default=False)
-    date_other = models.DateField()
+    regis_vat = models.BooleanField(default=False,blank=True, null=True)
+    date_vat = models.DateField(blank=True, null=True)
+    regis_sbt = models.BooleanField(default=False,blank=True, null=True)
+    date_sbt = models.DateField(blank=True, null=True)
+    regis_sso = models.BooleanField(default=False,blank=True, null=True)
+    date_sso = models.DateField(blank=True, null=True)
+    regis_e_filling = models.BooleanField(default=False,blank=True, null=True)
+    date_e_filling = models.DateField(blank=True, null=True)
+    regis_other = models.BooleanField(default=False,blank=True, null=True)
+    date_other = models.DateField(blank=True, null=True)
     password_client = models.ForeignKey('PasswordClient', on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:

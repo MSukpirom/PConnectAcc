@@ -1,0 +1,18 @@
+/*font*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600&display=swap');
+
+* {
+    font-family: 'Noto Sans Thai', sans-serif;
+}
+
+body {
+    background: url('/static/img/background.png');
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-size: cover; /* Cover the entire viewport */
+    background-position: center; /* Center the image */
+}
+
+/*ของหน้าTasks*/
+.group:hover .group-hover\:flex {
+	display: flex !important;
+}
