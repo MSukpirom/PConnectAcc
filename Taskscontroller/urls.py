@@ -10,5 +10,5 @@ urlpatterns = [
     path('GetDistrict/',views.GetDistrict,name='GetDistrict'),
     path('GetSubdistrict/',views.GetSubdistrict,name='GetSubdistrict'),
     path('egagement/',views.RegisterEgagement,name='RegisterEgagement'),
-    path('taskscontrol/',views.TasksControl,name='TasksControl'),
+    path('tasks/',views.TasksControl,name='TasksControl'),
 ]

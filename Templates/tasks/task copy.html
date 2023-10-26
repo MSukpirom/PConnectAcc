@@ -1,0 +1,67 @@
+{% extends 'tasks/base.html' %}
+{% block content %}
+<div class="card card-side bg-base-100 shadow-xl m-7">
+  <div class="card-body">
+
+    <div class="join">
+      <button class="btn join-item">เดดไลน์</button>
+      <button class="btn join-item">คนดูแล</button>
+      <button class="btn join-item">ประเภทงาน</button>
+      <button class="btn join-item">Period</button>
+    </div>
+
+    <div class="kanban">
+      <div class="head2">
+        <span class="text-center bg-pink-400 rounded h-10">Open Job</span>
+        <div class="column">
+          <div class="item" draggable="true">Card 01</div>
+          <div class="item" draggable="true">Card 02</div>
+        </div>
+      </div>
+      <div class="head2">
+        <span>In Process</span>
+        <div class="column">
+          <div class="item" draggable="true">Card 05</div>
+          <div class="item" draggable="true">Card 06</div>
+        </div>
+      </div>
+      <div class="head2">
+        <span>Review</span>
+        <div class="column">
+          <div class="item" draggable="true">Card 07</div>
+          <div class="item" draggable="true">Card 08</div>
+        </div>
+      </div>
+      <div class="head2">
+        <span>Pending Client</span>
+        <div class="column">
+          <div class="item" draggable="true">Card 09</div>
+          <div class="item" draggable="true">Card 10</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover">
+      <div class="head h-10">เปิดงาน
+        <div class="column">
+          <div class="item" draggable="true">Card 09</div>
+          <div class="item" draggable="true">Card 10</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <button type="button">เปิดงาน</button>
+    </div>
+
+
+
+
+
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock content %}

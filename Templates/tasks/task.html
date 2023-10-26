@@ -1,0 +1,46 @@
+{% extends 'tasks/base.html' %}
+{% block content %}
+  <span class="header1">Demo Tasks Control</span>
+  <div id="kaban">
+    <div id="boards">
+      <div class="board" id="board1">
+        <header>On hold</header>
+        <div class="cards" id="b1">
+          <div class="card"><span class="cardtitle noselect">A great card #1</span></div>
+          <div class="card"><span class="cardtitle noselect">A great card #2</span></div>
+          <div class="card"><span class="cardtitle noselect">A great card #3</span></div>
+          <div class="card"><span class="cardtitle noselect">A great card #4</span></div>
+        </div>
+      </div>
+
+      <div class="board" id="board2">
+        <header>In Progress</header>
+        <div class="cards" id="b2">
+          <div class="card"><span class="cardtitle">A great card #5</span></div>
+        </div>
+      </div>
+
+      <div class="board" id="board3">
+        <header>Review</header>
+        <div class="cards" id="b3">
+          <div class="card"><span class="cardtitle noselect">A great card #6</span></div>
+        </div>
+      </div>
+
+      <div class="board" id="board4">
+        <header>Pending Client</header>
+        <div class="cards" id="b4">
+          <div class="card"><span class="cardtitle noselect">A great card #7</span></div>
+        </div>
+      </div>
+
+      <div class="board" id="board5">
+        <header>Done</header>
+        <div class="cards" id="b5">
+          <div class="card"><span class="cardtitle noselect">A great card #8</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

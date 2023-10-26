@@ -5,9 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="{% static 'src/base.css' %}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.2/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="{% static 'src/style.css' %}" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.2/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css" />
 
 </head>
 <body>
@@ -37,9 +39,12 @@
     </nav>
     {% block content %}
     {% endblock %}
-    <footer class="sticky inset-0 z-10 block h-max w-full max-w-full rounded-none border border-white/80 bg-white bg-opacity-80 py-2 px-4 text-white shadow-md backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4">
-    </footer>
+    {% comment %} <footer class="sticky inset-0 z-10 block h-max w-full max-w-full rounded-none border border-white/80 bg-white bg-opacity-80 py-2 px-4 text-white shadow-md backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4">
+    </footer> {% endcomment %}
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    
 </body>
 
 </html>

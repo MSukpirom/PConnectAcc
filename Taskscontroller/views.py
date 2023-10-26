@@ -88,4 +88,4 @@ def RegisterEgagement(request):
     return render(request, 'tasks/egagement.html')
 
 def TasksControl(request):
-    return render(request, 'tasks/taskscontrol.html')
+    return render(request, 'tasks/task.html')
