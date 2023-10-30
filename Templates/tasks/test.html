@@ -193,9 +193,8 @@
 
     <script type="text/javascript">
         $(function() {
-            // Load provinces into the province select dropdown
             $.ajax({
-                url: '{% url 'Taskscontroller:GetProvinces' %}',
+                url: '{% url 'Taskscontroller:GetProvince' %}',
                 success: function(data) {
                     var $selectProvince = $('#province');
                     $selectProvince.empty();

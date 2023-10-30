@@ -2,28 +2,7 @@
 
 * {
     font-family: 'Noto Sans Thai', sans-serif;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
     -webkit-animation-fill-mode: none !important;
-}
-
-.header1 {
-    font-weight: 700;
-    font-size: 22px;
-    color: black;
-    text-align: center;
-    margin-top: 30px;
-}
-
-p {
-    color: black;
-    text-align: center;
-    margin: 30px;
-}
-
-a {
-    color: black;
 }
 
 #kaban {
@@ -32,8 +11,6 @@ a {
   width: 100%;
   ax-width: 100%;
   height: auto;
-  margin: 8px;
-  padding: 2px;
 }
 
 #boards {
@@ -159,4 +136,11 @@ a {
   opacity: 0.4;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
   filter: alpha(opacity=20);
+}
+
+.card-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.5rem;
 }
