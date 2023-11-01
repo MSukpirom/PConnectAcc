@@ -70,15 +70,15 @@ class Subdistrict(models.Model):
         db_table = 'subdistrict'
 
 class RegisterClient(models.Model):
-    regis_vat = models.BooleanField(default=False,blank=True, null=True)
+    regis_vat = models.BooleanField(default=False, null=True)
     date_vat = models.DateField(blank=True, null=True)
-    regis_sbt = models.BooleanField(default=False,blank=True, null=True)
+    regis_sbt = models.BooleanField(default=False, null=True)
     date_sbt = models.DateField(blank=True, null=True)
-    regis_sso = models.BooleanField(default=False,blank=True, null=True)
+    regis_sso = models.BooleanField(default=False, null=True)
     date_sso = models.DateField(blank=True, null=True)
-    regis_e_filling = models.BooleanField(default=False,blank=True, null=True)
+    regis_e_filling = models.BooleanField(default=False, null=True)
     date_e_filling = models.DateField(blank=True, null=True)
-    regis_other = models.BooleanField(default=False,blank=True, null=True)
+    regis_other = models.BooleanField(default=False, null=True)
     date_other = models.DateField(blank=True, null=True)
     password_client = models.ForeignKey('PasswordClient', on_delete=models.CASCADE, blank=True, null=True)
 

@@ -4,13 +4,12 @@ from . import views
 app_name = 'Taskscontroller'
 
 urlpatterns = [
+    path('test2/', views.test, name='test'),
+
     path('test/', views.checkdata, name='test'),
     path('index/', views.checkdata, name='Index'),
-    # path('cilent/', views.RegisterForm, name='RegisterForm'),
     path('get_district/', views.GetDistrict, name='GetDistrict'),
     path('get_subdistrict/', views.GetSubdistrict, name='GetSubdistrict'),
-    # path('egagement/',views.RegisterEgagement,name='RegisterEgagement'),
-    # path('tasks/',views.TasksControl,name='TasksControl'),
 
     # NEW
     path('page/',views.Dashboard,name='Dashboard'),

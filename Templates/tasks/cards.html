@@ -1,45 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Location Selector</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-    <h1>Location Selector</h1>
+{% extends 'tasks/templates.html' %}
+{% block content %}
 
-    <label for="province">Province:</label>
-    <select id="province" name="province">
-      {% for p in province %}
-        <option value="{{ p.id }}">{{ p.name_th }}</option>
-      {% endfor %}
-    </select>
-
-    <label for="district">District:</label>
-    <select id="district"></select>
-
-    <label for="subdistrict">Subdistrict:</label>
-    <select id="subdistrict"></select>
-
-    <script>
-        $(document).ready(function() {
-            $("#province").change(function() {
-                $.post("{% url 'Taskscontroller:GetDistrict' %}", { province: $(this).val() }, function(data) {
-                    $("#district").empty();
-                    $.each(data, function(index, value) {
-                        $("#district").append("<option>" + value + "</option>");
-                    });
-                });
-            });
-
-            $("#district").change(function() {
-                $.post("/get_subdistricts", { district: $(this).val() }, function(data) {
-                    $("#subdistrict").empty();
-                    $.each(data, function(index, value) {
-                        $("#subdistrict").append("<option>" + value + "</option>");
-                    });
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+{% endblock content %}
