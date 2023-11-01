@@ -71,18 +71,6 @@ def Forms(request):
         ct_address1 += ' ' + ct_province
     ct_address2 = request.POST.get('ct_address2')
 
-    ct = Contact()
-    ct.name = ct_name
-    ct.position = ct_position
-    ct.tel = ct_tel
-    ct.email = ct_email
-    ct.line = ct_line
-    ct.other = ct_other
-    ct.address1 = ct_address1
-    ct.address2 = ct_address2
-    ct.save()
-
-
     regis_vat = request.POST.get('regis_vat')
     if regis_vat == 'on':
         regis_vat = True
@@ -114,6 +102,30 @@ def Forms(request):
         regis_other = False
     date_other = request.POST.get('date_other')
 
+    c = Client()
+    c.code = c_code
+    c.company_name = c_company_name
+    c.tin_id = c_tin_id
+    c.create_data = c_create_data
+    c.service_fee = c_service_fee
+    c.address = c_address
+    c.channal = c_channal
+    c.detail = c_detail
+    c.register_vat = RegisterClient.objects.filter(pk=id).first()
+    c.contact = Contact.objects.filter(pk=id).first()
+    c.save()
+
+    ct = Contact()
+    ct.name = ct_name
+    ct.position = ct_position
+    ct.tel = ct_tel
+    ct.email = ct_email
+    ct.line = ct_line
+    ct.other = ct_other
+    ct.address1 = ct_address1
+    ct.address2 = ct_address2
+    ct.save()
+
     r = RegisterClient()
     r.regis_vat = regis_vat
     r.date_vat = date_vat
@@ -126,23 +138,6 @@ def Forms(request):
     r.regis_other = regis_other
     r.date_other = date_other
     r.save()
-
-    c = Client()
-    c.code = c_code
-    c.company_name = c_company_name
-    c.tin_id = c_tin_id
-    c.create_data = c_create_data
-    c.service_fee = c_service_fee
-    c.address = c_address
-    c.channal = c_channal
-    c.detail = c_detail
-    c.register_vat = RegisterClient.objects.filter(id=regisclient_id).first()
-    c.contact = Contact.objects.filter(id=contact_id).first()
-    c.save()
-
-
-
-
 
     return render(request, 'test2.html')
 
