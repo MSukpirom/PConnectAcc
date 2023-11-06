@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ลูกค้า</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="{% static 'js/jquery.mask.min.js' %}"></script>
+</head>
+
+<body>
+    <h1>ลูกค้า</h1>
+    <form method="post" aaction="{% url 'Taskscontroller:FormsClient' %}">
+        {% csrf_token %}
+
+        <h2>ข้อมูลลูกค้า</h2>
+        <label for="c_code">รหัสลูกค้า:</label>
+        <input type="text" name="c_code" id="c_code"><br>
+
+        <label for="c_company_name">ชื่อบริษัท:</label>
+        <input type="text" name="c_company_name" id="c_company_name"><br>
+
+        <label for="c_tax_id">เลขที่นิติ:</label>
+        <input type="text" name="c_tax_id" id="c_tax_id"><br>
+
+        <label for="c_service_fee">ค่าบริการ:</label>
+        <input type="number" name="c_service_fee" id="c_service_fee"><br>
+
+        <label for="c_create_client_date">วันที่สร้างลูกค้า:</label>
+        <input type="date" name="c_create_client_date" id="c_create_client_date"><br>
+
+        <label for="address">ที่อยู่บริษัท:</label>
+        <input type="text" name="address" id="address"><br>
+
+        <label for="province">จังหวัด:</label>
+        <input type="text" name="province" id="province"><br>
+
+        <label for="district">อำเภอ:</label>
+        <input type="text" name="district" id="district"><br>
+
+        <label for="subdistrict">ตำบล:</label>
+        <input type="text" name="subdistrict" id="subdistrict"><br>
+
+        <label for="c_channal">ช่องทางรู้จักเรา:</label>
+        <input type="text" name="c_channal" id="c_channal"><br>
+
+        <label for="c_detail">รายละเอียดเพิ่มเติม:</label>
+        <textarea name="c_detail" id="c_detail"></textarea><br>
+
+        <!-- Add more fields for other client information as needed -->
+
+        <h2>ข้อมูลผู้ติดต่อ</h2>
+        <label for="contact_name">ชื่อผู้ติดต่อ:</label>
+        <input type="text" name="contact_name" id="contact_name"><br>
+
+        <label for="contact_position">ตำแหน่งงาน:</label>
+        <input type="text" name="contact_position" id="contact_position"><br>
+
+        <label for="contact_phone">เบอร์ติดต่อ:</label>
+        <input type="text" name="contact_phone" id="contact_phone"><br>
+
+        <label for="contact_email">อีเมล:</label>
+        <input type="text" name="contact_email" id="contact_email"><br>
+
+        <label for="contact_line">ไลน์:</label>
+        <input type="text" name="contact_line" id="contact_line"><br>
+
+        <label for="contact_other">ช่องทางติดต่ออื่นๆ:</label>
+        <input type="text" name="contact_other" id="contact_other"><br>
+
+        <label for="contact_address">ที่อยู่ติดต่อ:</label>
+        <input type="text" name="contact_address" id="contact_address"><br>
+
+        <label for="contact_province">จังหวัด:</label>
+        <input type="text" name="contact_province" id="contact_province"><br>
+
+        <label for="contact_district">อำเภอ:</label>
+        <input type="text" name="contact_district" id="contact_district"><br>
+
+        <label for="contact_subdistrict">ตำบล:</label>
+        <input type="text" name="contact_subdistrict" id="contact_subdistrict"><br>
+
+        <!-- Add more fields for other contact information as needed -->
+
+        <h2>Tax Registration</h2>
+        <label for="vat">จดทะเบียนภาษีมูลค่าเพิ่ม:</label>
+        <input type="text" name="vat" id="vat">
+        <label for="vat_date">วันที่จด:</label>
+        <input type="date" name="vat_date" id="vat_date"><br>
+
+        <!-- Add more fields for other tax registration information as needed -->
+
+        <input type="submit" value="บันทึกข้อมูล">
+    </form>
+</body>
+
+</html>
