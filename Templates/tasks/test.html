@@ -54,7 +54,7 @@
                         </select>
                     </div>
                     <div>
-                        <label for="postcode" class="lable">รหัสไปรษณีย์</label>
+                        <label for="zipcode" class="lable">รหัสไปรษณีย์</label>
                         <input type="text" name="" id="" class="inputtext">
                     </div>
                     <div>
@@ -250,7 +250,7 @@
                             $.each(data, function(index, subdistrict) {
                                 $selectSubdistrict.append($('<option>', {
                                     value: subdistrict.id,
-                                    text: subdistrict.name_th + '  ' + subdistrict.postcode
+                                    text: subdistrict.name_th + '  ' + subdistrict.zipcode
                                 }));
                             });
                         }

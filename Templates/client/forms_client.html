@@ -1,11 +1,11 @@
 {% load static %}
-
 <html lang="en">
 
 <head>
-    <title>Client</title>
+    <title>ลูกค้า</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="shortcut icon" href="#" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script src="{% static 'js/jquery.mask.min.js' %}"></script>
@@ -13,7 +13,8 @@
 
 <body>
     <form action="{% url 'Taskscontroller:forms_client' %}" method="post">
-    {% csrf_token %}
+        {% csrf_token %}
+        <!--Client-->
         <div class="col-sm-4">
             <label for="">รหัสลูกค้า</label>
             <input type="text" name="c_code" id="">
@@ -24,11 +25,11 @@
         </div>
         <div class="col-sm-4">
             <label for="">เลขที่นิติ</label>
-            <input type="text" name="c_tin_id" id="">
+            <input type="text" name="c_tax_id" id="">
         </div>
         <div class="col-sm-4">
             <label for="">วันที่สร้างลูกค้า</label>
-            <input type="date" name="c_create_data" id="">
+            <input type="date" name="c_create_client_date" id="">
         </div>
         <div class="col-sm-4">
             <label for="">ค่าบริการ</label>
@@ -40,7 +41,7 @@
         </div>
         <div class="col-sm-4">
             <div class="form-group">
-                <select name="province" id="province" class="form-select form-select-sm">
+                <select name="c_province" id="province" class="form-select form-select-sm">
                     <option value selected disabled hidden>จังหวัด</option>
                     {% for p in province %}
                     <option value="{{ p.id }}">{{ p.name_th }}</option>
@@ -50,14 +51,14 @@
         </div>
         <div class="col-sm-4">
             <div class="form-group">
-                <select name="district" id="district" class="form-select form-select-sm">
+                <select name="c_district" id="district" class="form-select form-select-sm">
                     <option value="" selected disabled hidden>อำเภอ</option>
                 </select>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-group">
-                <select name="subdistrict" id="subdistrict" class="form-select form-select-sm">
+                <select name="c_subdistrict" id="subdistrict" class="form-select form-select-sm">
                     <option value="" selected disabled hidden>ตำบล</option>
                 </select>
             </div>
@@ -75,46 +76,53 @@
             <label for="">รายละเอียดเพิ่มเติม</label>
             <textarea name="c_detail" id=""></textarea>
         </div>
+        <div>
+            <label for="">สถานะ</label>
+        </div>
+
+        <!--Tax Register-->
         <div class="col-sm-4">
             <label class="lable">จดทะเบียนภาษีมูลค่าเพิ่ม
-                <input type="radio" name="regis_vat" checked />
+                <input type="radio" name="r_vat" checked />
                 <span value"ใช่">ใช่</span> 
-                <input type="radio" name="regis_vat" />
+                <input type="radio" name="r_vat" />
                 <span value"ไม่ใช่">ไม่ใช่</span>
                 <span>วันที่จด</span>
-                <input type="date" name="date_vat" id="" class="">
+                <input type="date" name="r_vat_date" id="" class="">
             </label>
         </div>
         <div class="col-sm-4">
             <label class="lable">จดทะเบียนภาษีธุรกิจเฉพาะ
-                <input type="radio" name="regis_sbt" checked />
+                <input type="radio" name="r_sbt" checked />
                 <span value"ใช่">ใช่</span> 
-                <input type="radio" name="regis_sbt" />
+                <input type="radio" name="r_sbt" />
                 <span value"ไม่ใช่">ไม่ใช่</span>
                 <span>วันที่จด</span>
-                <input type="date" name="date_sbt" id="" class="">
+                <input type="date" name="r_sbt_date" id="" class="">
             </label>
         </div>
         <div class="col-sm-4">
             <label class="lable">จดทะเบียนนายจ้าง
-                <input type="radio" name="regis_sso" checked />
+                <input type="radio" name="r_sso" checked />
                 <span value"ใช่">ใช่</span> 
-                <input type="radio" name="regis_sso" />
+                <input type="radio" name="r_sso" />
                 <span value"ไม่ใช่">ไม่ใช่</span>
                 <span>วันที่จด</span>
-                <input type="date" name="date_sso" id="" class="">
+                <input type="date" name="r_sso_date" id="" class="">
             </label>
         </div>
         <div class="col-sm-4">
             <label class="lable">จดทะเบียนยื่นภาษีออนไลน์
-                <input type="radio" name="regis_e_filling" checked />
+                <input type="radio" name="r_dbd_e_filling" checked />
                 <span value"ใช่">ใช่</span> 
-                <input type="radio" name="regis_e_filling" />
+                <input type="radio" name="r_dbd_e_filling" />
                 <span value"ไม่ใช่">ไม่ใช่</span>
                 <span>วันที่จด</span>
-                <input type="date" name="date_e_filling" id="" class="">
+                <input type="date" name="r_dbd_e_filling_date" id="" class="">
             </label>
         </div>
+
+        <!--Contact-->
         <div class="col-sm-4">
             <label for="">ชื่อผู้ติดต่อ</label>
             <input type="text" name="ct_name" id="">
@@ -125,7 +133,7 @@
         </div>
         <div class="col-sm-4">
             <label for="">เบอร์ติดต่อ</label>
-            <input type="tel" name="ct_tel" id="">
+            <input type="tel" name="ct_phone" id="">
         </div>
         <div class="col-sm-4">
             <label for="">อีเมล</label>
@@ -141,13 +149,14 @@
         </div>
         <div class="col-sm-4">
             <label for="">ที่อยู่ติดต่อ</label>
-            <input type="text" name="ct_address1" >
-            <input type="checkbox" name="ct_address2" id="">
+            <input type="text" name="ct_address0" id="" value="0">
+            <input type="checkbox" name="ct_address_company" id="" value="1">
             <span>เหมือนบริษัท</span>
         </div>
+
         <div class="col-sm-4">
             <div class="form-group">
-                <select name="ct_province" id="province" class="form-select form-select-sm">
+                <select name="ct_province" id="province2" class="form-select form-select-sm">
                     <option value selected disabled hidden>จังหวัด</option>
                     {% for p in province %}
                     <option value="{{ p.id }}">{{ p.name_th }}</option>
@@ -157,14 +166,14 @@
         </div>
         <div class="col-sm-4">
             <div class="form-group">
-                <select name="ct_district" id="district" class="form-select form-select-sm">
+                <select name="ct_district" id="district2" class="form-select form-select-sm">
                     <option value="" selected disabled hidden>อำเภอ</option>
                 </select>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-group">
-                <select name="ct_subdistrict" id="subdistrict" class="form-select form-select-sm">
+                <select name="ct_subdistrict" id="subdistrict2" class="form-select form-select-sm">
                     <option value="" selected disabled hidden>ตำบล</option>
                 </select>
             </div>
@@ -173,6 +182,11 @@
             <button type="submit">บันทึกข้อมูล</button>
         </div>
     </form>
+
+
+
+
+    
     
     <script type="text/javascript">
         $(function() {
@@ -199,6 +213,35 @@
                         $('#subdistrict').append('<option value selected disabled hidden>ตำบล</option>')
                         $.each(data, function(i, v) {
                             $('#subdistrict').append('<option value="' + data[i].id + '">' + data[i].name_th + '  ' + data[i].zipcode + '</option>');
+                        })
+                    }
+                })
+            })
+        });
+        $(function() {
+            $('#province2').change(function() {
+                $("#district2").empty()
+                $.ajax({
+                    url: '{% url 'Taskscontroller:GetDistrict' %}',
+                    data: {province_id: $(this).val()
+                    },
+                    success: function(data) {
+                        $("#district2").append('<option value selected disabled hidden>อำเภอ</option>')
+                        $.each(data, function(index, value) {
+                            $("#district2").append('<option value="' + data[index].id + '">' + data[index].name_th + '</option>')
+                        })
+                    }
+                })
+            })
+            $('#district2').change(function() {
+                $('#subdistrict2').empty()
+                $.ajax({
+                    url : '{% url 'Taskscontroller:GetSubdistrict' %}',
+                    data: {district_id: $(this).val()},
+                    success: function(data) {
+                        $('#subdistrict2').append('<option value selected disabled hidden>ตำบล</option>')
+                        $.each(data, function(i, v) {
+                            $('#subdistrict2').append('<option value="' + data[i].id + '">' + data[i].name_th + '  ' + data[i].zipcode + '</option>');
                         })
                     }
                 })

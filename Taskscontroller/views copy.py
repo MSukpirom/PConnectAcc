@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from Taskscontroller.models import Client,Province,District,Subdistrict, Contact, RegisterClient
 
 def checkdata(request):
-    subdistrict = Subdistrict.objects.values('id', 'name_th', 'postcode')
+    subdistrict = Subdistrict.objects.values('id', 'name_th', 'zipcode')
     district = District.objects.values('id', 'name_th')
     province = Province.objects.values('id', 'name_th').order_by('name_th')
     return render(request, 'forms.html', {
@@ -13,7 +13,7 @@ def checkdata(request):
     })
 
 def test(request):
-    subdistrict = Subdistrict.objects.values('id', 'name_th', 'postcode')
+    subdistrict = Subdistrict.objects.values('id', 'name_th', 'zipcode')
     district = District.objects.values('id', 'name_th')
     province = Province.objects.values('id', 'name_th').order_by('name_th')
     return render(request, 'test2.html', {
@@ -178,5 +178,5 @@ def GetDistrict(request):
 
 def GetSubdistrict(request):
     district_id = request.GET.get('district_id')
-    subdistrict = Subdistrict.objects.filter(district=district_id).all().values('id', 'name_th', 'postcode')
+    subdistrict = Subdistrict.objects.filter(district=district_id).all().values('id', 'name_th', 'zipcode')
     return JsonResponse(list(subdistrict),safe=False)

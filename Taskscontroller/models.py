@@ -61,14 +61,14 @@ class Subdistrict(models.Model):
         db_table = 'subdistrict'
 
 class RegisterTax(models.Model):
-    vat = models.BooleanField(default=False, null=True)
-    vat_date = models.DateField(default=None)
-    sbt = models.BooleanField(default=False, null=True)
-    sbt_date = models.DateField(default=None)
-    sso = models.BooleanField(default=False, null=True)
-    sso_date = models.DateField(default=None)
-    dbd_e_filling = models.BooleanField(default=False, null=True)
-    dbd_e_filling_date = models.DateField(default=None)
+    vat = models.BooleanField(null=True, blank=True, default=None)
+    vat_date = models.DateField(blank=True, null=True)
+    sbt = models.BooleanField(null=True, blank=True, default=None)
+    sbt_date = models.DateField(blank=True, null=True)
+    sso = models.BooleanField(null=True, blank=True, default=None)
+    sso_date = models.DateField(blank=True, null=True)
+    dbd_e_filling = models.BooleanField(null=True, blank=True, default=None)
+    dbd_e_filling_date = models.DateField(blank=True, null=True)
 
     class Meta:
         db_table = 'register_tax'
@@ -116,8 +116,8 @@ class PasswordClient(models.Model):
 #     type =  models.CharField(max_length=255, default=None, null=True, blank=True)
 #     deadline = models.IntegerField(max_length=255, blank=True, null=True)
 #     notification = models.IntegerField(max_length=255, blank=True, null=True)
-#     start_date = models.DateField(default=None)
-#     end_date = models.DateField(default=None)
+#     start_date = models.DateField(blank=True, null=True)
+#     end_date = models.DateField(blank=True, null=True)
 #     review_by = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)
 #     review_date = models.DateTimeField(auto_now_add=True)
 #     approved_by = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)

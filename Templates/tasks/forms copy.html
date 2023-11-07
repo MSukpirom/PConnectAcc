@@ -751,7 +751,7 @@
                     success: function(data) {
                         $('#subdistrict').append('<option value selected disabled hidden>ตำบล</option>')
                         $.each(data, function(i, v) {
-                            $('#subdistrict').append('<option value="' + data[i].id + '">' + data[i].name_th + '  ' + data[i].postcode + '</option>');
+                            $('#subdistrict').append('<option value="' + data[i].id + '">' + data[i].name_th + '  ' + data[i].zipcode + '</option>');
                         })
                     }
                 })
