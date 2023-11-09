@@ -19,16 +19,13 @@ class Client(models.Model):
     code =  models.CharField(max_length=255, default=None, null=True, blank=True)
     company_name =  models.CharField(max_length=255, default=None, null=True, blank=True)
     tax_id =  models.CharField(max_length=255, default=None, null=True, blank=True)
-    service_fee =  models.CharField(max_length=255, default=None, null=True, blank=True)
+    service_fee =  models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
     create_client_date = models.DateTimeField(auto_now_add=True)
-    address = models.CharField(max_length=255, default=None, null=True, blank=True)
-    province = models.ForeignKey('Province', on_delete=models.CASCADE, blank=True, null=True)
-    district = models.ForeignKey('District', on_delete=models.CASCADE, blank=True, null=True)
-    subdistrict = models.ForeignKey('Subdistrict', on_delete=models.CASCADE, blank=True, null=True)
+    c_address = models.OneToOneField('Address', on_delete=models.CASCADE, related_name='client_address')
     channal =  models.CharField(max_length=255, default=None, null=True, blank=True)
     detail =  models.CharField(max_length=255, default=None, null=True, blank=True)
     contact = models.ForeignKey('Contact',on_delete=models.CASCADE, blank=True, null=True)
-    status = models.BooleanField(default=False, null=True)
+    status = models.BooleanField(null=True)
     register_tax = models.ForeignKey('RegisterTax',on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
@@ -61,14 +58,14 @@ class Subdistrict(models.Model):
         db_table = 'subdistrict'
 
 class RegisterTax(models.Model):
-    vat = models.BooleanField(null=True, blank=True, default=None)
-    vat_date = models.DateField(blank=True, null=True)
-    sbt = models.BooleanField(null=True, blank=True, default=None)
-    sbt_date = models.DateField(blank=True, null=True)
-    sso = models.BooleanField(null=True, blank=True, default=None)
-    sso_date = models.DateField(blank=True, null=True)
-    dbd_e_filling = models.BooleanField(null=True, blank=True, default=None)
-    dbd_e_filling_date = models.DateField(blank=True, null=True)
+    vat = models.CharField(max_length=255, default=None, null=True, blank=True)
+    vat_date = models.DateTimeField(blank=True, null=True, default="0000-00-00 00:00:00")
+    sbt = models.CharField(max_length=255, default=None, null=True, blank=True)
+    sbt_date = models.DateTimeField(blank=True, null=True, default="0000-00-00 00:00:00")
+    sso = models.CharField(max_length=255, default=None, null=True, blank=True)
+    sso_date = models.DateTimeField(blank=True, null=True, default="0000-00-00 00:00:00")
+    dbd_e_filling = models.CharField(max_length=255, default=None, null=True, blank=True)
+    dbd_e_filling_date = models.DateTimeField(blank=True, null=True, default="0000-00-00 00:00:00")
 
     class Meta:
         db_table = 'register_tax'
@@ -87,11 +84,11 @@ class Contact(models.Model):
     email =  models.CharField(max_length=255, default=None, null=True, blank=True)
     line =  models.CharField(max_length=255, default=None, null=True, blank=True)
     other =  models.CharField(max_length=255, default=None, null=True, blank=True)
-    address0 = models.CharField(max_length=255, default=None, null=True, blank=True)
+    address = models.CharField(max_length=255, default=None, null=True, blank=True)
     province = models.ForeignKey('Province', on_delete=models.CASCADE, blank=True, null=True)
     district = models.ForeignKey('District', on_delete=models.CASCADE, blank=True, null=True)
     subdistrict = models.ForeignKey('Subdistrict', on_delete=models.CASCADE, blank=True, null=True)
-    address_company = models.ForeignKey('Client', on_delete=models.CASCADE, blank=True, null=True, related_name='address_company')
+    same_address_company = models.ForeignKey('Address', null=True, blank=True, on_delete=models.CASCADE, related_name='same_address_company') 
 
     class Meta:
         db_table = 'contact'
@@ -103,6 +100,14 @@ class PasswordClient(models.Model):
 
     class Meta:
         db_table = 'password_client'
+
+class Address(models.Model):
+    address = models.CharField(max_length=255, default=None, null=True, blank=True)
+    province = models.ForeignKey('Province', on_delete=models.CASCADE, blank=True, null=True)
+    district = models.ForeignKey('District', on_delete=models.CASCADE, blank=True, null=True)
+    subdistrict = models.ForeignKey('Subdistrict', on_delete=models.CASCADE, blank=True, null=True)
+    class Meta:
+        db_table = 'address'
 
 # class DocumentType(models.Model):
 #     name_th =  models.CharField(max_length=255, default=None, null=True, blank=True)
