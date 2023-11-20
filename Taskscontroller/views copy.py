@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, JsonResponse
 from Taskscontroller.models import *
 from datetime import date, datetime
 
@@ -18,10 +18,11 @@ def checkdata(request):
     district = District.objects.values('id', 'name_th')
     province = Province.objects.values('id', 'name_th').order_by('name_th')
 
-    return render(request, 'client/forms_client.html',{
+    # return render(request, 'client/forms_client.html',{
+    return render(request, 'testall.html',{
         'subdistrict': subdistrict,
         'district': district,
-        'province': province
+        'province': province,
     })
     # return JsonResponse(list(subdistrict),safe=False)
 
@@ -74,13 +75,13 @@ def forms_client(request):
         district = request.POST.get('district')
         subdistrict = request.POST.get('subdistrict')
 
-        address = Address(
+        address0 = Address(
             address = address,
             province = Province.objects.filter(id=province).first(),
             district = District.objects.filter(id=district).first(),
             subdistrict = Subdistrict.objects.filter(id=subdistrict).first(),
             )
-        address.save()
+        address0.save()
 
         # Create and save the Contact instance
         contact = Contact(
@@ -94,8 +95,9 @@ def forms_client(request):
             province=Province.objects.filter(id=ct_province).first(),
             district=District.objects.filter(id=ct_district).first(),
             subdistrict=Subdistrict.objects.filter(id=ct_subdistrict).first(),
-            same_address_company=address,
+            same_address_company = address0
         )
+        # ติดเรื่อง same_address_company ต้องให้บันทึกอย่างใดอย่างหนึ่ง
         contact.save()
 
         # Create and save the RegisterTax instance
@@ -118,7 +120,7 @@ def forms_client(request):
             tax_id=c_tax_id,
             service_fee=c_service_fee,
             create_client_date=datetime.today(),
-            c_address=address,
+            c_address=address0,
             channal=c_channal,
             detail=c_detail,
             status=c_status,
@@ -126,8 +128,36 @@ def forms_client(request):
             register_tax=register_tax,
         )
         client.save()
-
+        
         return redirect('Taskscontroller:list_client')
+
+def password_clients(request):
+    password_clients = PasswordClient.objects.all()
+    register_types = RegisterType.objects.all()
+    clients = Client.objects.all()
+    return render(request, 'password_manager/password_clients.html', {'password_clients': password_clients, 'register_types': register_types, 'clients': clients})
+
+def add_password_client(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        type_password_id = request.POST.get('type_password')
+        client_id = request.POST.get('client')
+
+        try:
+            type_password = RegisterType.objects.get(id=type_password_id)
+            client = Client.objects.get(id=client_id)
+
+            password_client = PasswordClient(username=username, password=password, type_password=type_password, client=client)
+            password_client.save()
+
+            return redirect('Taskscontroller:password_clients')
+        except (RegisterType.DoesNotExist, Client.DoesNotExist):
+            return render(request, 'error404.html')  # Handle the case where the RegisterType or Client doesn't exist
+
+    register_types = RegisterType.objects.all()
+    clients = Client.objects.all()
+    return render(request, 'password_manager/add_password_client.html', {'register_types': register_types, 'clients': clients})
 
 def list_client(request):
     clients = Client.objects.values('id', 'code', 'company_name', 'tax_id', 'contact__name', 'register_tax', 'status')

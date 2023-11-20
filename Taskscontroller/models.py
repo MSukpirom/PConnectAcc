@@ -71,6 +71,7 @@ class RegisterTax(models.Model):
         db_table = 'register_tax'
 
 class RegisterType(models.Model):
+    short_name = models.CharField(max_length=255, default=None, null=True, blank=True)
     name_th =  models.CharField(max_length=255, default=None, null=True, blank=True)
     name_en =  models.CharField(max_length=255, default=None, null=True, blank=True)
 
@@ -94,9 +95,10 @@ class Contact(models.Model):
         db_table = 'contact'
 
 class PasswordClient(models.Model):
-    register_type = models.ForeignKey('RegisterType', on_delete=models.CASCADE, blank=True, null=True)
     username =  models.CharField(max_length=255, default=None, null=True, blank=True)
     password =  models.CharField(max_length=255, default=None, null=True, blank=True)
+    type_password = models.ForeignKey('RegisterType', null=True, blank=True, on_delete=models.CASCADE)
+    client = models.ForeignKey('Client', null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'password_client'
@@ -149,3 +151,24 @@ class Address(models.Model):
 
 #     class Meta:
 #         db_table = 'user'
+
+class Egagement(models.Model):
+    client = models.ForeignKey('Client', null=True, blank=True, on_delete=models.CASCADE)
+    job_code = models.CharField(max_length=255, default=None, null=True, blank=True)
+    start_date_service = models.DateTimeField()
+    end_date_service = models.DateTimeField()
+    start_date_period = models.DateTimeField()
+    end_date_period = models.DateTimeField()
+    administrator = models.ForeignKey('User', null=True, blank=True, on_delete=models.CASCADE)
+    approver = models.CharField(max_length=255, default=None, null=True, blank=True)
+    reviewer = models.CharField(max_length=255, default=None, null=True, blank=True)
+    document_type = models.ForeignKey('DocumentType', null=True, blank=True, on_delete=models.CASCADE)
+    create_by = models.CharField(max_length=255, default=None, null=True, blank=True)
+    create_date = models.DateTimeField(max_length=255, default=None, null=True, blank=True)
+    update_by = models.CharField(max_length=255, default=None, null=True, blank=True)
+    update_date = models.DateTimeField(max_length=255, default=None, null=True, blank=True)
+    delete_by = models.CharField(max_length=255, default=None, null=True, blank=True)
+    delete_date = models.DateTimeField(max_length=255, default=None, null=True, blank=True)
+
+    class Meta:
+        db_table = 'egagement'

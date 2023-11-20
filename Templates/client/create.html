@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <form action="{% url 'Taskscontroller:forms_client' %}" method="post">
+    <form action="{% url 'Taskscontroller:create_client' %}" method="post">
         {% csrf_token %}
         <!--Client-->
         <div class="col-sm-4">
@@ -214,6 +214,7 @@
             <br>
             <button type="submit">บันทึกข้อมูล</button>
         </form>
+    <a href="{% url 'Taskscontroller:list_client' %}">กลับไปหน้าข้อมูลลูกค้า</a>
 
     <script type="text/javascript">
         $(function() {
