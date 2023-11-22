@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>แก้ไขข้อมูลหมวดงาน</title>
+</head>
+<body>
+    <h1>แก้ไขข้อมูลหมวดงาน</h1>
+
+    <form method="post" action="{% url 'Taskscontroller:update_type_job' pk=doc_type.id %}">
+    {% csrf_token %}
+
+        <h2>แก้ไขหมวดงาน</h2>
+        <label for="c_name_th">ชื่อหมวดงาน (TH): </label>
+        <input type="text" name="c_name_th" value="{{ doc_type.account_category.name_th }}">
+        <br>
+        <label for="c_name_en">ชื่อหมวดงาน (EN): </label>
+        <input type="text" name="c_name_en" value="{{ doc_type.account_category.name_en }}">
+        <br>
+
+        <h2>แก้ไขประเภทงาน</h2>
+        <label for="t_name_th">ชื่อประเภทงาน (TH): </label>
+        <input type="text" name="t_name_th" value="{{ doc_type.name_th }}">
+        <br>
+        <label for="t_name_en">ชื่อประเภทงาน (EN): </label>
+        <input type="text" name="t_name_en" value="{{ doc_type.name_en }}">
+        <br>
+
+        <button type="submit">บันทึกข้อมูล</button>
+        <br>
+        <a href="{% url 'Taskscontroller:create_type_job' %}">กลับไปหน้า</a>
+    </form>
+    <script>
+        function updated(){
+            alert("บันทึกรายการแก้ไขใช่หรือไม่?");
+        }
+    </script>
+</body>
+</html>

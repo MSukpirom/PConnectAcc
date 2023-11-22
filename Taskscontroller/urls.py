@@ -11,10 +11,14 @@ urlpatterns = [
     # path('list_client/<int:id>/' ,list_client, name='list_client'),
     path('get_districts/', get_districts, name='GetDistrict'),
     path('get_subdistricts/', get_subdistricts, name='GetSubdistrict'),
-    path('password_clients/', password_clients, name='password_clients'),
-    path('add_password_client/', add_password_client, name='add_password_client'),
-    path('create/',  create_client, name='create_client'),
-    path('list/',  list_client, name='list_client'),
+    # path('password_clients/', password_clients, name='password_clients'),
+    # path('add_password_client/', add_password_client, name='add_password_client'),
+    path('create/', create_client, name='create_client'),
+    path('list/', list_client, name='list_client'),
     path('update/<int:pk>/', update_client, name='update_client'),
     path('delete/<int:pk>/', delete_client, name='delete_client'),
+    path('type_job/', create_type_job, name='create_type_job'),
+    path('list_type_job/', list_type_job, name='list_type_job'),
+    path('update_type_job/<int:pk>/', update_type_job, name='update_type_job'),
+
 ]

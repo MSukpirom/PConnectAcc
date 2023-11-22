@@ -1,0 +1,38 @@
+<!-- setting/create_type_job.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>คั้งค่าประเภทงาน และหมวด</title>
+</head>
+<body>
+    <h1>ประเภทงาน และหมวด</h1>
+
+    <!-- Form for creating/updating items -->
+    <form method="post" action="{% url 'Taskscontroller:create_type_job' %}">
+        {% csrf_token %}
+
+        <h3>เพิ่ม/แก้ไขหมวด</h3>
+        <label for="c_name_th">ชื่อ (ภาษาไทย): </label>
+        <input type="text" name="c_name_th">
+        <br>
+        <label for="c_name_en">ชื่อ (ภาษาอังกฤษ): </label>
+        <input type="text" name="c_name_en">
+        <br>
+
+        <h3>เพิ่ม/แก้ไขประเภทงาน</h3>
+        <label for="t_name_th">ชื่อ (ภาษาไทย): </label>
+        <input type="text" name="t_name_th">
+        <br>
+        <label for="t_name_en">ชื่อ (ภาษาอังกฤษ): </label>
+        <input type="text" name="t_name_en">
+        <br>
+        <button type="submit">บันทึก</button>
+    </form>
+    <script>
+        function updated(){
+            alert("บันทึกรายการแก้ไขใช่หรือไม่?");
+        }
+    </script>
+</body>
+</html>

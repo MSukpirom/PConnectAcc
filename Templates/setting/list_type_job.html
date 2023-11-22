@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>คั้งค่าประเภทงาน และหมวด</title>
+</head>
+<body>
+    <h1>ประเภทงาน และหมวด</h1>
+    <a href="{% url 'Taskscontroller:create_type_job'%}">เพิ่ม</a>
+    <h3>รายละเอียด</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ประเภทงาน</th>
+                <th>ประเภทหมวด</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for document_type in document_types %}
+                <tr>
+                    <td>{{ document_type.id }}</td>
+                    <td>{{ document_type.name_th }}</td>
+                    <td>{{ document_type.account_category.name_th }}</td>
+                    <td><a href="{% url 'Taskscontroller:update_type_job' pk=forloop.counter %}">แก้ไข</a></td>
+                    <td><a href="{% url 'Taskscontroller:delete_client' pk=forloop.counter %}" onclick="deleted()">ลบ</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function updated(){
+            alert("บันทึกรายการแก้ไขใช่หรือไม่?");
+        }
+    </script>
+</body>
+</html>

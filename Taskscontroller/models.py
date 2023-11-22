@@ -20,7 +20,7 @@ class Client(models.Model):
     company_name =  models.CharField(max_length=255, default=None, null=True, blank=True)
     tax_id =  models.CharField(max_length=255, default=None, null=True, blank=True)
     service_fee =  models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
-    create_client_date = models.DateTimeField(auto_now_add=True)
+    create_client_date =models.DateTimeField(blank=True, null=True)
     c_address = models.OneToOneField('Address', on_delete=models.CASCADE, related_name='client_address')
     channal =  models.CharField(max_length=255, default=None, null=True, blank=True)
     detail =  models.CharField(max_length=255, default=None, null=True, blank=True)
@@ -111,64 +111,68 @@ class Address(models.Model):
     class Meta:
         db_table = 'address'
 
-# class DocumentType(models.Model):
-#     name_th =  models.CharField(max_length=255, default=None, null=True, blank=True)
-#     name_en =  models.CharField(max_length=255, default=None, null=True, blank=True)
+class AccountCategory(models.Model):
+    name_th =  models.CharField(max_length=255, default=None, null=True, blank=True)
+    name_en =  models.CharField(max_length=255, default=None, null=True, blank=True)
 
-#     class Meta:
-#         db_table = 'document_type'
+    class Meta:
+        db_table = 'account_category'
 
-# class DocumentTypeDetail(models.Model):
-#     document_type = models.ForeignKey('DocumentType', on_delete=models.CASCADE, blank=True, null=True)
-#     type =  models.CharField(max_length=255, default=None, null=True, blank=True)
-#     deadline = models.IntegerField(max_length=255, blank=True, null=True)
-#     notification = models.IntegerField(max_length=255, blank=True, null=True)
-#     start_date = models.DateField(blank=True, null=True)
-#     end_date = models.DateField(blank=True, null=True)
-#     review_by = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)
-#     review_date = models.DateTimeField(auto_now_add=True)
-#     approved_by = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)
-#     approved_date = models.DateTimeField(auto_now_add=True)
-#     create_by = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)
-#     create_date = models.DateTimeField(auto_now_add=True)
-#     update_by = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)
-#     update_date = models.DateTimeField(auto_now_add=True)
-#     delete_by = models.ForeignKey('User', on_delete=models.CASCADE, blank=True, null=True)
-#     delete_date = models.DateTimeField(auto_now_add=True)
+class DocumentType(models.Model):
+    name_th =  models.CharField(max_length=255, default=None, null=True, blank=True)
+    name_en =  models.CharField(max_length=255, default=None, null=True, blank=True)
+    account_category = models.ForeignKey(AccountCategory, on_delete=models.CASCADE, blank=True, null=True, related_name='document_types')
 
-#     class Meta:
-#         db_table = 'document_type_detail'
+    class Meta:
+        db_table = 'document_type'
 
-# class User(models.Model):
-#     username =  models.CharField(max_length=255, default=None, null=True, blank=True)
-#     password =  models.CharField(max_length=255, default=None, null=True, blank=True)
-#     confirm_password = models.CharField(max_length=255, default=None, null=True, blank=True)
-#     permission = models.CharField(max_length=255, default=None, null=True, blank=True)
-#     fname =  models.CharField(max_length=255, default=None, null=True, blank=True)
-#     lname =  models.CharField(max_length=255, default=None, null=True, blank=True)
-#     position =  models.CharField(max_length=255, default=None, null=True, blank=True)
-#     image = models.TextField()
+class DocumentTypeDetail(models.Model):
+    document_type = models.ForeignKey(DocumentType, on_delete=models.CASCADE, blank=True, null=True)
+    type =  models.CharField(max_length=255, default=None, null=True, blank=True)
+    deadline = models.CharField(max_length=255, default=None, null=True, blank=True)
+    notification = models.CharField(max_length=255, default=None, null=True, blank=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    review_by = models.ForeignKey('BaseUser', models.DO_NOTHING, blank=True, null=True, related_name='review_by')
+    review_date = models.DateTimeField(blank=True, null=True)
+    approved_by = models.ForeignKey('BaseUser', models.DO_NOTHING, blank=True, null=True, related_name='approved_by')
+    approved_date = models.DateTimeField(blank=True, null=True)
 
-#     class Meta:
-#         db_table = 'user'
+    class Meta:
+        db_table = 'document_type_detail'
+
+class BaseUser(models.Model):
+    active = models.BooleanField(blank=True, null=True)
+    username =  models.CharField(max_length=255, default=None, null=True, blank=True)
+    password =  models.CharField(max_length=255, default=None, null=True, blank=True)
+    confirm_password = models.CharField(max_length=255, default=None, null=True, blank=True)
+    first_name =  models.CharField(max_length=255, default=None, null=True, blank=True)
+    last_name =  models.CharField(max_length=255, default=None, null=True, blank=True)
+    nick_name = models.CharField(max_length=255, default=None, null=True, blank=True)
+    position =  models.CharField(max_length=255, default=None, null=True, blank=True)
+    image = models.TextField(blank=True, null=True)
+    permission = models.CharField(max_length=255, default=None, null=True, blank=True)
+
+    class Meta:
+        db_table = 'base_user'
 
 class Egagement(models.Model):
     client = models.ForeignKey('Client', null=True, blank=True, on_delete=models.CASCADE)
     job_code = models.CharField(max_length=255, default=None, null=True, blank=True)
-    start_date_service = models.DateTimeField()
-    end_date_service = models.DateTimeField()
-    start_date_period = models.DateTimeField()
-    end_date_period = models.DateTimeField()
-    administrator = models.ForeignKey('User', null=True, blank=True, on_delete=models.CASCADE)
-    approver = models.CharField(max_length=255, default=None, null=True, blank=True)
-    reviewer = models.CharField(max_length=255, default=None, null=True, blank=True)
+    start_date_service = models.DateTimeField(blank=True, null=True)
+    end_date_service = models.DateTimeField(blank=True, null=True)
+    start_date_period = models.DateTimeField(blank=True, null=True)
+    end_date_period = models.DateTimeField(blank=True, null=True)
+    administrator = models.ForeignKey(BaseUser, models.DO_NOTHING, blank=True, null=True, related_name='admin')
+    approver = models.ForeignKey(BaseUser, models.DO_NOTHING, blank=True, null=True, related_name='approver')
+    reviewer =models.ForeignKey(BaseUser, models.DO_NOTHING, blank=True, null=True, related_name='reviewer')
     document_type = models.ForeignKey('DocumentType', null=True, blank=True, on_delete=models.CASCADE)
-    create_by = models.CharField(max_length=255, default=None, null=True, blank=True)
-    create_date = models.DateTimeField(max_length=255, default=None, null=True, blank=True)
-    update_by = models.CharField(max_length=255, default=None, null=True, blank=True)
-    update_date = models.DateTimeField(max_length=255, default=None, null=True, blank=True)
-    delete_by = models.CharField(max_length=255, default=None, null=True, blank=True)
-    delete_date = models.DateTimeField(max_length=255, default=None, null=True, blank=True)
+    create_by = models.ForeignKey(BaseUser, models.DO_NOTHING, blank=True, null=True, related_name='create_by')
+    create_date =models.DateTimeField(blank=True, null=True)
+    update_by = models.ForeignKey(BaseUser, models.DO_NOTHING, blank=True, null=True, related_name='update_by')
+    update_date =models.DateTimeField(blank=True, null=True)
+    delete_by = models.ForeignKey(BaseUser, models.DO_NOTHING, blank=True, null=True, related_name='delete_by')
+    delete_date =models.DateTimeField(blank=True, null=True)
 
     class Meta:
         db_table = 'egagement'
