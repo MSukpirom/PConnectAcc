@@ -1,0 +1,352 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<div class="container-fluid p-0">
+    <!--  Header End -->
+    <div class="row">
+        <div class="card w-100">
+            <div class="card-body p-4">
+                <h4 class="fw-semibold mb-4">กรอกข้อมูลลูกค้า</h4>
+                <form action="{% url 'Taskscontroller:client_create' %}" method="post">
+                    {% csrf_token %}
+                    <!--Client-->
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <label for="" class="form-label">วันที่สร้าง
+                                <a class="badge bg-dark text-white ms-2">วันที่อัตโนมัติ
+                                </a>
+                            </label>
+                            <input type="date" name="c_create_client_date" id="c_create_client_date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <label for="" class="form-label">รหัสลูกค้า</label>
+                            <input type="text" name="c_code" id="" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="" class="form-label">ชื่อลูกค้า</label>
+                            <input type="text" name="c_company_name" id="" class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="" class="form-label">เลขที่นิติ</label>
+                            <input type="text" name="c_tax_id" id="" class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="" class="form-label">ค่าบริการ</label>
+                            <input type="number" name="c_service_fee" id="" step="0.01" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="" class="form-label">ที่อยู่บริษัท</label>
+                            <input type="text" name="c_address" id="company-address" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <select name="c_province" id="province" class="form-select">
+                                <option value selected disabled hidden>จังหวัด</option>
+                                {% for p in province %}
+                                <option value="{{ p.id }}">{{ p.name_th }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="c_district" id="district" class="form-select">
+                                <option value="" selected disabled hidden>อำเภอ/เขต</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="c_subdistrict" id="subdistrict" class="form-select">
+                                <option value="" selected disabled hidden>ตำบล/แขวง</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="" class="form-label">ช่องทางรู้จักเรา</label>
+                            <select class="form-select" name="c_channal" id="choices" onchange="showInput()">
+                                <option value="Facebook">Facebook</option>
+                                <option value="Youtube">Youtube</option>
+                                <option value="Others">อื่นๆ</option>
+                            </select>
+                            <div id="otherInput" style="display: none;">
+                                <label for="otherText">ระบุ</label>
+                                <input type="text" class="form-control" name="c_channal" id="otherText">
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <label for="" class="form-label">รายละเอียดเพิ่มเติม</label>
+                            <textarea name="c_detail" id="" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="" class="form-check-label">สถานะ</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input class="form-check-input" type="radio" name="status_radio" id="1" value="1" {% if edit_c_status == 1 %}checked{% endif %}>&nbsp;
+                            <label class="form-check-label" for="1">เปิด</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input class="form-check-input" type="radio" name="status_radio" id="2" value="2" {% if edit_c_status == 2 %}checked{% endif %}>&nbsp;
+                            <label class="form-check-label" for="2">ปิด</label>
+                        </div>
+                    </div>
+
+                    <!--Tax Register-->
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">จดทะเบียนภาษีมูลค่าเพิ่ม</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="r_vat" class="form-check-input" value="ใช่">&nbsp;
+                            <label class="form-check-label" for="">ใช่</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="r_vat" class="form-check-input" value="ไม่ใช่">&nbsp;
+                            <label class="form-check-label" for="">ไม่ใช่</label><br>
+                            <label class="form-check-label" for="">วันที่จด</label>
+                            <input type="date" name="r_vat_date" id="r_vat_date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">จดทะเบียนภาษีธุรกิจเฉพาะ</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="r_sbt" class="form-check-input" value="ใช่">&nbsp;
+                            <label class="form-check-label" for="">ใช่</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="r_sbt" class="form-check-input" value="ไม่ใช่">&nbsp;
+                            <label class="form-check-label" for="">ไม่ใช่</label><br>
+                            <label class="form-check-label" for="">วันที่จด</label>
+                            <input type="date" name="r_sbt_date" id="r_sbt_date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">จดทะเบียนนายจ้าง</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="r_sso" class="form-check-input" value="ใช่">&nbsp;
+                            <label class="form-check-label" for="">ใช่</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="r_sso" class="form-check-input" value="ไม่ใช่">&nbsp;
+                            <label class="form-check-label" for="">ไม่ใช่</label><br>
+                            <label class="form-check-label" for="">วันที่จด</label>
+                            <input type="date" name="r_sso_date" id="r_sso_date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label">จดทะเบียนยื่นภาษีออนไลน์</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="r_dbd_e_filling" class="form-check-input" value="ใช่">&nbsp;
+                            <label class="form-check-label" for="">ใช่</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="r_dbd_e_filling" class="form-check-input" value="ไม่ใช่">&nbsp;
+                            <label class="form-check-label" for="">ไม่ใช่</label><br>
+                            <label class="form-check-label" for="">วันที่จด</label>
+                            <input type="date" name="r_dbd_e_filling_date" id="r_dbd_e_filling_date" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <!--Contact-->
+                    <h4 class="fw-semibold mt-4">ผู้ติดต่อ</h4>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="" class="form-label">ชื่อผู้ติดต่อ</label>
+                            <input type="text" name="ct_name" id="" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="" class="form-label">ตำแหน่ง</label>
+                            <input type="text" name="ct_position" id="" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="" class="form-label">เบอร์ติดต่อ</label>
+                            <input type="tel" name="ct_phone" id="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="" class="form-label">อีเมล</label>
+                            <input type="email" name="ct_email" id="" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="" class="form-label">ไลน์</label>
+                            <input type="text" name="ct_line" id="" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="" class="form-label">ช่องทางติดต่ออื่นๆ</label>
+                            <input type="text" name="ct_other" id="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="contact-address" class="form-label">ที่อยู่ผู้ติดต่อ</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label for="same-as-company" class="form-label">
+                                <input type="checkbox" class="form-check-input" name="ct_address2" id="same-as-company" onchange="toggleContactAddress()">&nbsp;&nbsp;เหมือนที่อยู่บริษัท
+                            </label>
+                            <input type="text" class="form-control" name="ct_address" id="contact-address">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <select name="ct_province" id="province2" class="form-select">
+                                <option value selected disabled hidden>จังหวัด</option>
+                                {% for p in province %}
+                                <option value="{{ p.id }}">{{ p.name_th }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="ct_district" id="district2" class="form-select">
+                                <option value="" selected disabled hidden>อำเภอ</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="ct_subdistrict" id="subdistrict2" class="form-select">
+                                <option value="" selected disabled hidden>ตำบล</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--Password-->
+                    <h4 class="fw-semibold mt-4">รหัสผ่าน</h4>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="" class="form-label" name="type_password" data-value="1">RD</label><br>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">ผู้ใช้งาน :</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">รหัสผ่าน :</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="" class="form-label" name="type_password" data-value="2">SSO</label><br>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">ผู้ใช้งาน :</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">รหัสผ่าน :</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="" class="form-label" name="type_password" data-value="3">DBD E-filling</label><br>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">ผู้ใช้งาน :</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">รหัสผ่าน :</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="" class="form-label" name="type_password" data-value="4">Payroll</label><br>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">ผู้ใช้งาน :</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">รหัสผ่าน :</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-light" type="reset">ล้างข้อมูล</button>
+                        <button class="btn btn-primary me-md-2" type="sumbit">บันทึกข้อมูล</button>
+                    </div>
+                    <div class="d-grid gap-2 d-md-block">
+                        <a class="btn btn-outline-dark" href="{% url 'Taskscontroller:client_list' %}" role="button">กลับไปหน้าข้อมูลลูกค้า</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('#province').change(function() {
+            $("#district").empty()
+            $.ajax({
+                url: '{% url 'Taskscontroller:GetDistrict' %}',
+                data: {province_id: $(this).val()
+                },
+                success: function(data) {
+                    $("#district").append('<option value selected disabled hidden>อำเภอ/เขต</option>')
+                    $.each(data, function(index, value) {
+                        $("#district").append('<option value="' + data[index].id + '">' + data[index].name_th + '</option>')
+                    })
+                }
+            })
+        })
+        $('#district').change(function() {
+            $('#subdistrict').empty()
+            $.ajax({
+                url : '{% url 'Taskscontroller:GetSubdistrict' %}',
+                data: {district_id: $(this).val()},
+                success: function(data) {
+                    $('#subdistrict').append('<option value selected disabled hidden>ตำบล/แขวง</option>')
+                    $.each(data, function(i, v) {
+                        $('#subdistrict').append('<option value="' + data[i].id + '">' + data[i].name_th + '  ' + data[i].zipcode + '</option>');
+                    })
+                }
+            })
+        })
+    });
+    $(function() {
+        $('#province2').change(function() {
+            $("#district2").empty()
+            $.ajax({
+                url: '{% url 'Taskscontroller:GetDistrict' %}',
+                data: {province_id: $(this).val()
+                },
+                success: function(data) {
+                    $("#district2").append('<option value selected disabled hidden>อำเภอ/เขต</option>')
+                    $.each(data, function(index, value) {
+                        $("#district2").append('<option value="' + data[index].id + '">' + data[index].name_th + '</option>')
+                    })
+                }
+            })
+        })
+        $('#district2').change(function() {
+            $('#subdistrict2').empty()
+            $.ajax({
+                url : '{% url 'Taskscontroller:GetSubdistrict' %}',
+                data: {district_id: $(this).val()},
+                success: function(data) {
+                    $('#subdistrict2').append('<option value selected disabled hidden>ตำบล/แขวง</option>')
+                    $.each(data, function(i, v) {
+                        $('#subdistrict2').append('<option value="' + data[i].id + '">' + data[i].name_th + ' ' + data[i].zipcode + '</option>');
+                    })
+                }
+            })
+        })
+    });
+    document.getElementById('c_create_client_date').valueAsDate = new Date();
+
+    function toggleContactAddress() {
+        var companyAddress = document.getElementById('company-address').value;
+        var contatcAddress = document.getElementById('contact-address');
+        var sameAsCompanyCheckbox = document.getElementById('same-as-company');
+
+        if (sameAsCompanyCheckbox.checked) {
+            contatcAddress.value = companyAddress;
+        } else {
+            contatcAddress.value = '';
+        }
+        contatcAddress.disabled = sameAsCompanyCheckbox.checked;
+    }
+    function showInput() {
+        var selectBox = document.getElementById("choices");
+        var otherInput = document.getElementById("otherInput");
+
+        if (selectBox.value === "Others") {
+            otherInput.style.display = "block";
+        } else {
+            otherInput.style.display = "none";
+        }
+    }
+</script>
+{% endblock content %}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Egagement</title>
+</head>
+
+<body>
+    <h1>Create Egagement</h1>
+    <form method="post" action="{% url 'Taskscontroller:create_egagement' %}">
+        {% csrf_token %}
+
+        <label for="client">รหัสลูกค้า</label>
+        <select name="client" id="client_select">
+            {% for client in clients %}
+            <option value="{{ client.id }}" {% if client.id == selected_client_id %}selected{% endif %}>
+                {{ client.code }} {{ client.company_name }}
+            </option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="e_job_code">รหัส Job</label>
+        <input type="text" name="e_job_code"><br>
+
+        <label for="e_sdate_service">วันที่เริ่มบริการ</label>
+        <input type="date" name="e_sdate_service"><br>
+
+        <label for="e_edate_service">วันที่สิ้นสุดบริการ</label>
+        <input type="date" name="e_edate_service"><br>
+
+        <label for="e_sdate_period">รอบที่เริ่มให้บริการ</label>
+        <input type="date" name="e_sdate_period"><br>
+
+        <label for="e_edate_period">รอบที่สิ้นสุดให้บริการ</label>
+        <input type="date" name="e_edate_period"><br>
+
+        <label for="document_type_id">Document Type</label>
+        <select name="document_type_id">
+            {% for document_type in document_types %}
+            <option value="{{ document_type.id }}">{{ document_type.name_th }}</option>
+            {% endfor %}
+        </select><br>
+
+        <button type="submit">สร้างเอกสาร</button>
+    </form>
+    <a href="{% url 'Taskscontroller:list_egagement' %}">ยกเลิก กลับหน้าหลัก</a>
+</body>
+
+</html>

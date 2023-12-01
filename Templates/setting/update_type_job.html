@@ -1,38 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>แก้ไขข้อมูลหมวดงาน</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แก้ไขหมวด และประเภท</title>
 </head>
+
 <body>
-    <h1>แก้ไขข้อมูลหมวดงาน</h1>
+    <h1>แก้ไขหมวด และประเภท</h1>
+    <form method="post" action="{% url 'Taskscontroller:update_type_job' pk=document_type.id %}" id="createTypeJobForm">
+        {% csrf_token %}
 
-    <form method="post" action="{% url 'Taskscontroller:update_type_job' pk=doc_type.id %}">
-    {% csrf_token %}
+        <label for="acc_category">หมวดงาน</label>
+        <input value="{{ document_type.account_category.name_th }}"><br>
 
-        <h2>แก้ไขหมวดงาน</h2>
-        <label for="c_name_th">ชื่อหมวดงาน (TH): </label>
-        <input type="text" name="c_name_th" value="{{ doc_type.account_category.name_th }}">
-        <br>
-        <label for="c_name_en">ชื่อหมวดงาน (EN): </label>
-        <input type="text" name="c_name_en" value="{{ doc_type.account_category.name_en }}">
-        <br>
+        <label for="t_name_th">ชื่อประเภทงาน (Thai)</label>
+        <input value="{{ document_type.name_th }}"><br>
 
-        <h2>แก้ไขประเภทงาน</h2>
-        <label for="t_name_th">ชื่อประเภทงาน (TH): </label>
-        <input type="text" name="t_name_th" value="{{ doc_type.name_th }}">
-        <br>
-        <label for="t_name_en">ชื่อประเภทงาน (EN): </label>
-        <input type="text" name="t_name_en" value="{{ doc_type.name_en }}">
-        <br>
+        <label for="t_name_en">ชื่อประเภทงาน (English)</label>
+        <input value="{{ document_type.name_en }}"><br>
 
-        <button type="submit">บันทึกข้อมูล</button>
-        <br>
-        <a href="{% url 'Taskscontroller:create_type_job' %}">กลับไปหน้า</a>
+        <button type="submit">บันทึก</button>
     </form>
-    <script>
-        function updated(){
-            alert("บันทึกรายการแก้ไขใช่หรือไม่?");
-        }
-    </script>
+    <a href="{% url 'Taskscontroller:list_type_job' %}">ยกเลิก และย้อนกลับ</a>
 </body>
+
 </html>

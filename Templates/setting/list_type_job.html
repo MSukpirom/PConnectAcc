@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>คั้งค่าประเภทงาน และหมวด</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตั้งค่าประเภทงาน และหมวด</title>
 </head>
 <body>
     <h1>ประเภทงาน และหมวด</h1>
-    <a href="{% url 'Taskscontroller:create_type_job'%}">เพิ่ม</a>
+    <a href="{% url 'Taskscontroller:create_type_job' %}">เพิ่ม</a>
     <h3>รายละเอียด</h3>
     <table>
         <thead>
@@ -13,7 +15,7 @@
                 <th>ID</th>
                 <th>ประเภทงาน</th>
                 <th>ประเภทหมวด</th>
-                
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -22,16 +24,27 @@
                     <td>{{ document_type.id }}</td>
                     <td>{{ document_type.name_th }}</td>
                     <td>{{ document_type.account_category.name_th }}</td>
-                    <td><a href="{% url 'Taskscontroller:update_type_job' pk=forloop.counter %}">แก้ไข</a></td>
-                    <td><a href="{% url 'Taskscontroller:delete_client' pk=forloop.counter %}" onclick="deleted()">ลบ</a></td>
+                    <td>
+                        <a href="{% url 'Taskscontroller:update_type_job' pk=document_type.id %}" onclick="updated()">แก้ไข</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'Taskscontroller:delete_type_job' pk=document_type.id %}" onclick="deleted()">ลบ</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <script>
-        function updated(){
+        function updated() {
             alert("บันทึกรายการแก้ไขใช่หรือไม่?");
+        }
+
+        function deleted() {
+            var confirmDelete = confirm("คุณต้องการลบรายการนี้ใช่หรือไม่?");
+            if (confirmDelete) {
+                alert("ลบรายการเรียบร้อยแล้ว");
+            }
         }
     </script>
 </body>

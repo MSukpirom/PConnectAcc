@@ -1,0 +1,106 @@
+
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>ข้อมูลลูกค้า</title>
+</head>
+<body>
+    <h1>ข้อมูลลูกค้า</h1>
+    <a href="{% url 'Taskscontroller:create_client'%}">เพิ่มลูกค้า</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ลำดับ</th>
+                <th>รหัสลูกค้า</th>
+                <th>ชื่อบริษัท</th>
+                <th>เลขที่นิติ</th>
+                <th>Contact Name</th>
+                <th>Register Tax</th>
+                <th>สถานะ</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in clients %}
+            <tr>
+                <td>{{ c.id }}</td>
+                <td>{{ c.code }}</td>
+                <td>{{ c.company_name }}</td>
+                <td>{{ c.tax_id }}</td>
+                <td>{{ c.contact_name }}</td>  <!-- Fix the typo here (contact__name to contact_name) -->
+                <td>{{ c.register_tax }}</td>
+                <td>{{ c.status }}</td>
+                <td>
+                    <a href="{% url 'Taskscontroller:update_client' pk=forloop.counter %}">แก้ไข</a>
+                    <a href="{% url 'Taskscontroller:delete_client' pk=forloop.counter %}" onclick="deleted()">ลบ</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        function deleted(){
+            alert("คุณแน่ใจหรือว่าจะลบรายการนี้?");
+        }
+    </script>
+</body> 
+</html> {% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'src/demo.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="card shadow border-0 mb-7">
+        <div class="card-header">
+            <h5 class="mb-0">Clients</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-nowrap">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Egagement</th>
+                        <th scope="col">รหัสลูกค้า</th>
+                        <th scope="col">ชื่อบริษัท</th>
+                        <th scope="col">เลขที่นิติ</th>
+                        <th scope="col">สถานะ</th>
+                        <th scope="col">บัญชี</th>
+                        <th scope="col">เงินเดือน</th>
+                        <th scope="col">ภาษี</th>
+                        <th scope="col">รายงาน</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                    {% for c in clients %}
+                        <tr>
+                            <td>{{ c.egagement.job_code }}</td>
+                            <td>{{ c.code }}</td>
+                            <td>{{ c.company_name }}</td>
+                            <td>{{ c.tax_id }}</td>
+                            <td>{{ c.status }}</td>
+                            <td>{{ c.account }}</td>
+                            <td>{{ c.tax }}</td>
+                            <td>{{ c.payroll }}</td>
+                            <td>{{ c.report }}</td>
+                            <td>
+                                <a href="{% url 'Taskscontroller:update_client' pk=forloop.counter %}" class="btn btn-sm btn-neutral">แก้ไข</a>
+                                <a href="{% url 'Taskscontroller:delete_client' pk=forloop.counter %}" onclick="deleted()"><button type="button" class="btn btn-sm btn-square btn-neutral text-danger-hover">
+                                <i class="bi bi-trash"></i>
+                            </button></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

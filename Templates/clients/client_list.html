@@ -1,0 +1,102 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container-fluid">
+    <!--  Header End -->
+    <div class="row">
+        <div class="card w-100">
+            <div class="card-body p-4">
+                <h4 class="fw-semibold mb-4">ข้อมูลลูกค้า</h4>
+                <div>
+                    <a href="{% url 'Taskscontroller:client_create'%}">
+                        <button type="button" class="btn btn-success">เพิ่มลูกค้าใหม่  <i class="fa-solid fa-circle-plus"></i></button>
+                        </button>
+                    </a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-nowrap mb-0 align-middle">
+                        <thead class="text-dark fs-4">
+                            <tr>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Id</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Company Name</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Tax ID</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Status</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Account</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Payroll</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Tax</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Report</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0"></h6>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for c in clients %}
+                            <tr>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">{{ c.id }}</h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-1">{{ c.code }}</h6>
+                                    <span class="fw-normal">{{ c.company_name }}</span>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <p class="mb-0 fw-normal">{{ c.tax_id }}</p>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge rounded-3 fw-semibold 
+                                            {% if c.status.name == 'เปิด' %}
+                                                bg-primary
+                                            {% elif c.status.name == 'ปิด' %}
+                                                bg-danger
+                                            {% endif %}">
+                                            {{ c.status.name }}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-normal">รายปี</h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-normal">รายปี</h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-normal">รายปี</h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-normal">Lv.3</h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <a href="{% url 'Taskscontroller:client_update' pk=forloop.counter %}" class="btn btn-sm btn-neutral">
+                                        <button type="button" class="btn btn-outline-warning fw-normal">แก้ไข</button>
+                                    </a>
+                                    <a href="{% url 'Taskscontroller:delete_client' pk=forloop.counter %}" onclick="deleted()">
+                                        <i class="fa-solid fa-trash-can fa-lg" style="color: #ff0000;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

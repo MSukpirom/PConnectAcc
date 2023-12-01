@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Egagement</title>
+</head>
+
+<body>
+    <h1>Update Egagement</h1>
+
+    <!-- Your form for updating a type of job goes here -->
+    <form method="post" action="{% url 'Taskscontroller:update_egagement' pk=egagement.id %}">
+        {% csrf_token %}
+        <!-- Your form fields go here, for example: -->
+        <label for="">ชื่อลูกค้า</label>
+        <input type="text" name="" value="{{ egagement.client.company_name }}"><br>
+
+        <label for="">รหัส JOB</label>
+        <input type="text" name="edit_job_code" value="{{ egagement.job_code }}" readonly><br>
+
+        <label for="">วันที่เริ่มบริการ</label>
+        <input type="date" name="edit_sdate_service" value="{% if egagement.start_date_service %}{{ egagement.start_date_service|date:'Y-m-d' }}{% endif %}" placeholder="Start Date Service"><br>
+
+        <label for="">วันที่สิ้นสุดบริการ</label>
+        <input type="date" name="edit_edate_service" value="{% if egagement.end_date_service %}{{ egagement.end_date_service|date:'Y-m-d' }}{% endif %}" placeholder="End Date Service"><br>
+
+        <label for="">รอบที่เริ่มให้บริการ</label>
+        <input type="date" name="edit_sdate_period" value="{% if egagement.start_date_period %}{{ egagement.start_date_period|date:'Y-m-d' }}{% endif %}" placeholder="Start Date Period"><br>
+
+        <label for="">รอบที่สิ้นสุดให้บริการ</label>
+        <input type="date" name="edit_edate_period" value="{% if egagement.end_date_period %}{{ egagement.end_date_period|date:'Y-m-d' }}{% endif %}" placeholder="End Date Period"><br>
+
+        {% comment %} <label for="edit_administrator_id">ผู้ดูแล</label>
+        <input type="text" name="edit_administrator_id" value="{{ egagement.administrator }}"><br>
+
+        <label for="edit_approver_id">ผู้ตรวจทาน</label>
+        <input type="text" name="edit_approver_id" value="{{ egagement.approver }}"><br>
+
+        <label for="edit_reviewer_id">ผู้อนุมัติ</label>
+        <input type="text" name="edit_reviewer_id" value="{{ egagement.reviewer }}"><br> {% endcomment %}
+
+        <label for="">เอกสาร</label>
+        <input type="text" name="document_type_id" value="{{ egagement.document_type_id }}"><br>
+
+        <button type="submit">บันทึกการเปลี่ยนแปลง</button>
+    </form>
+    <!-- Add a button to cancel or navigate back -->
+    <a href="{% url 'Taskscontroller:list_egagement' %}">ยกเลิก และกลับไปหน้ารายการ</a>
+</body>
+
+</html>

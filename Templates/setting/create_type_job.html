@@ -1,38 +1,49 @@
-<!-- setting/create_type_job.html -->
-
 <!DOCTYPE html>
-<html>
-<head>
-    <title>คั้งค่าประเภทงาน และหมวด</title>
-</head>
-<body>
-    <h1>ประเภทงาน และหมวด</h1>
+<html lang="en">
 
-    <!-- Form for creating/updating items -->
-    <form method="post" action="{% url 'Taskscontroller:create_type_job' %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สร้างหมวด และประเภท</title>
+</head>
+
+<body>
+    <h1>สร้างหมวด และประเภท</h1>
+    <form method="post" action="{% url 'Taskscontroller:create_type_job' %}" id="createTypeJobForm">
         {% csrf_token %}
 
-        <h3>เพิ่ม/แก้ไขหมวด</h3>
-        <label for="c_name_th">ชื่อ (ภาษาไทย): </label>
-        <input type="text" name="c_name_th">
-        <br>
-        <label for="c_name_en">ชื่อ (ภาษาอังกฤษ): </label>
-        <input type="text" name="c_name_en">
-        <br>
+        <label for="acc_category">หมวดงาน</label>
+        <select name="acc_category" id="acc_category_select" onchange="toggleNewCategoryInput()">
+            {% for acc_category in acc_categories %}
+            <option value="{{ acc_category.id }}">{{ acc_category.name_th }}</option>
+            {% endfor %}
+            <option value="create_new">**เพิ่มหมวดใหม่</option>
+        </select>
+        <input type="text" name="new_acc_category" id="new_acc_category_input" style="display: none;"
+            placeholder="New Account Category"><br>
 
-        <h3>เพิ่ม/แก้ไขประเภทงาน</h3>
-        <label for="t_name_th">ชื่อ (ภาษาไทย): </label>
-        <input type="text" name="t_name_th">
-        <br>
-        <label for="t_name_en">ชื่อ (ภาษาอังกฤษ): </label>
-        <input type="text" name="t_name_en">
-        <br>
-        <button type="submit">บันทึก</button>
+        <label for="t_name_th">ชื่อประเภทงาน (Thai)</label>
+        <input type="text" name="t_name_th"><br>
+
+        <label for="t_name_en">ชื่อประเภทงาน (English)</label>
+        <input type="text" name="t_name_en"><br>
+
+        <button type="submit">สร้างเอกสาร</button>
     </form>
+
+    <a href="{% url 'Taskscontroller:list_type_job' %}">ยกเลิก และย้อนกลับ</a>
+
     <script>
-        function updated(){
-            alert("บันทึกรายการแก้ไขใช่หรือไม่?");
+        function toggleNewCategoryInput() {
+            var select = document.getElementById("acc_category_select");
+            var newCategoryInput = document.getElementById("new_acc_category_input");
+            if (select.value === "create_new") {
+                newCategoryInput.style.display = "block";
+            } else {
+                newCategoryInput.style.display = "none";
+            }
         }
     </script>
 </body>
+
 </html>
