@@ -7,6 +7,7 @@ from django.db import transaction
 import logging
 from django.db.models import Count, F
 from django.utils.dateparse import parse_date
+from django.urls import reverse
 
 def test(request):
     subdistrict = Subdistrict.objects.values('id', 'name_th', 'zipcode')
@@ -367,6 +368,11 @@ def get_type_job_detail(request):
     type_job_detail = TypeJobDetail.objects.filter(id=type_job_detail_id).all()
     return JsonResponse(list(type_job_detail), safe=False)
 
+def get_registype(request):
+    get_registype_id = request.GET.get('get_registype_id')
+    get_registype = TypeJobDetail.objects.filter(id=get_registype_id).all()
+    return JsonResponse(list(get_registype), safe=False)
+
 # logger = logging.getLogger(__name__)
 # def create_type_job(request):
 #     if request.method == 'POST':
@@ -605,11 +611,11 @@ def client_create(request):
     subdistrict = Subdistrict.objects.values('id', 'name_th', 'zipcode')
     district = District.objects.values('id', 'name_th')
     province = Province.objects.values('id', 'name_th').order_by('name_th')
-    register_types = RegisterType.objects.all()
+    register_types = RegisterType.objects.values('id','short_name','name_th','name_en')
     category = Category.objects.values('id', 'name_th', 'name_en')
     type_job = TypeJob.objects.all()
     type_job_detail = TypeJobDetail.objects.all()
-    client_status = ClientStatus.objects.all()
+    client_status = ClientStatus.objects.values('id','name')
 
     if request.method == 'POST':
         c_code = request.POST.get('c_code', '')
@@ -624,6 +630,7 @@ def client_create(request):
         c_channal = request.POST.get('c_channal')
         c_detail = request.POST.get('c_detail')
         c_status = request.POST.get('c_status')
+        c_register_tax = request.POST.get('c_register_tax')
 
         ct_name = request.POST.get('ct_name')
         ct_position = request.POST.get('ct_position')
@@ -646,9 +653,6 @@ def client_create(request):
         r_dbd_e_filling = request.POST.get('r_dbd_e_filling')
         r_dbd_e_filling_date = request.POST.get('r_dbd_e_filling_date')
 
-        type_password = request.POST.get('type_password')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
 
         date_vat = parse_date(r_vat_date)
         date_sbt = parse_date(r_sbt_date)
@@ -668,7 +672,7 @@ def client_create(request):
             subdistrict=Subdistrict.objects.filter(id=c_subdistrict).first(),
             channal=c_channal,
             detail=c_detail,
-            status=c_status,
+            status=ClientStatus.objects.filter(id=c_status).first(),
         )
         client.save()
 
@@ -700,20 +704,12 @@ def client_create(request):
         )
         register_tax.save()
 
-        password = ClientPassword(
-            username=username,
-            password=password,
-            client=client,
-            type_password=RegisterType.objects.filter(id=type_password).first(),
-        )
-        password.save()
-
         contact.client = client
         contact.save()
 
         client.contact = contact
+        client.register_tax = register_tax
         client.save()
-
     return render(request, 'clients/create.html', {
         'subdistrict': subdistrict,
         'district': district,
@@ -729,7 +725,7 @@ def client_update(request, pk):
     subdistrict = Subdistrict.objects.values('id', 'name_th', 'zipcode')
     district = District.objects.values('id', 'name_th')
     province = Province.objects.values('id', 'name_th').order_by('name_th')
-    register_types = RegisterType.objects.all()
+    register_types = RegisterType.objects.values('id','short_name','name_th','name_en')
     category = Category.objects.values('id', 'name_th', 'name_en')
     type_job = TypeJob.objects.all()
     type_job_detail = TypeJobDetail.objects.all()
@@ -820,7 +816,8 @@ def client_update(request, pk):
 
         return redirect("Taskscontroller:client_list")
 
-    return render(request, 'clients/update.html', {'client':client,
+    return render(request, 'clients/update.html', {
+        'client':client,
         'subdistrict': subdistrict,
         'district': district,
         'province': province,
@@ -830,6 +827,53 @@ def client_update(request, pk):
         'type_job_detail': type_job_detail,
         'client_status': client_status,
     })
+
+def client_password(request, client_id):
+    client = get_object_or_404(Client, pk=client_id)
+    register_types = RegisterType.objects.values('id', 'short_name', 'name_th')
+    client_pws = ClientPassword.objects.filter(client=client)
+
+    if request.method == 'POST':
+        action = request.POST.get('action')
+
+        if action == 'create':
+            type_password_id = request.POST.get('type_password_id')
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            if type_password_id:
+                type_password = get_object_or_404(RegisterType, id=type_password_id)
+
+                new_client_pw = ClientPassword(
+                    type_password=type_password,
+                    username=username,
+                    password=password,
+                    client=client
+                )
+                new_client_pw.save()
+
+        elif action == 'update':
+            pw_id = request.POST.get('update_id')
+            updated_pw = get_object_or_404(ClientPassword, id=pw_id)
+            updated_pw.type_password = get_object_or_404(RegisterType, id=request.POST.get('update_type_password_id'))
+            updated_pw.username = request.POST.get('update_username')
+            updated_pw.password = request.POST.get('update_password')
+            updated_pw.save()
+
+        elif action == 'delete':
+            pw_id = request.POST.get('delete_id')
+            pw_to_delete = get_object_or_404(ClientPassword, id=pw_id)
+            pw_to_delete.delete()
+
+        return redirect("Taskscontroller:client_password", client_id=client_id)
+
+    context = {
+        'client': client,
+        'register_types': register_types,
+        'client_pws': client_pws,
+    }
+
+    return render(request, 'clients/create.html', context)
 
 def engagement_list(request):
     return render(request,'engagement/list.html')

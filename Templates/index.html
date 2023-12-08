@@ -58,7 +58,6 @@
                             <span class="align-middle">Clients</span>
                         </a>
                     </li>
-
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{% url 'Taskscontroller:engagement_list' %}" aria-expanded="false">
                             <i class="fa-regular fa-file-lines"></i>
@@ -126,7 +125,6 @@
                             <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                                 <i class="align-middle" data-feather="settings"></i>
                             </a>
-
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                                 <i class="fa-solid fa-circle-user fa-lg"></i>
                                 <span class="text-dark">Name</span>
@@ -143,7 +141,6 @@
                     </ul>
                 </div>
             </nav>
-
             <main class="content">
                 {% block content %}
             
@@ -152,5 +149,6 @@
         </div>
     </div>
     <script src="{% static 'src/js/app.js' %}"></script>
+    <script src="{% static 'src/js/jquery.unduplicated.js' %}"></script>
 </body>
 </html>
