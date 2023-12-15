@@ -130,7 +130,8 @@
                             <input type="radio" name="r_dbd_e_filling" class="form-check-input" value="ไม่ใช่" />&nbsp;
                             <label class="form-check-label" for="">ไม่ใช่</label><br />
                             <label class="form-check-label" for="">วันที่จด</label>
-                            <input type="date" name="r_dbd_e_filling_date" id="r_dbd_e_filling_date" class="form-control" />
+                            <input type="date" name="r_dbd_e_filling_date" id="r_dbd_e_filling_date"
+                                class="form-control" />
                         </div>
                     </div>
 
@@ -195,18 +196,49 @@
                             </select>
                         </div>
                     </div>
+                    <br>
+
+                    <!--Password Client-->
+                    <h4 class="fw-semibold mb-4">รหัสผ่านของลูกค้า</h4>
+                    <form id="customerForm">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="type_password_id" class="form-label fw-semibold">หน่วยงาน :</label>
+                                    <select name="type_password_id" id="type_password_id" class="form-select">
+                                        <option value="" disabled selected>- กรุณาเลือก -</option>
+                                        {% for type_password in register_types %}
+                                        <option value="{{ type_password.id }}">{{ type_password.short_name }} -
+                                            {{ type_password.name_th }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="username" class="form-label fw-semibold">ผู้ใช้งาน :</label>
+                                    <input type="text" class="form-control" name="username" id="username" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="password" class="form-label fw-semibold">รหัสผ่าน :</label>
+                                    <input type="password" class="form-control" name="password" id="password" required>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="button" class="btn btn-dark" onclick="pushData()">เพิ่ม</button>
+                            </div>
+                        </form>
+
+                        <h5 class="fw-semibold mb-4">รายชื่อลูกค้า</h5>
+                        <ul id="customerList"></ul>
+
+                    <br>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button class="btn btn-success" type="sumbit" onclick="submitForm()">บันทึกข้อมูล</button>
                         <button class="btn btn-light" type="reset">ล้างข้อมูล</button>
                     </div>
                 </form>
-                <br>
-
                 <div class="d-grid gap-2 d-md-flex">
                     <a class="btn btn-primary" href="{% url 'Taskscontroller:client_list' %}" role="button">กลับไปหน้าข้อมูลลูกค้า</a>
-                
-                    <a class="btn btn-primary" href="{% url 'Taskscontroller:client_password' %}" role="button">ถัดไป</a>
                 </div>
+                <br>
             </div>
         </div>
     </div>
@@ -285,12 +317,32 @@
         }
         contatcAddress.disabled = sameAsCompanyCheckbox.checked;
     }
-    $('.btn').click(function(){  
-        swal({
-                title: 'Awesome !',
-                text: 'form submitted successfully !',
-                type: 'success'
-            });
-    });
+
+    function pushData() {
+        var typePasswordId = document.getElementById('type_password_id').value;
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+
+        var selectedType = register_types.find(function (type) {
+            return type.id == typePasswordId;
+        });
+
+        if (selectedType) {
+            var concatenatedValue = selectedType.short_name + ' ' + selectedType.name_th;
+
+            var listItem = document.createElement('li');
+            listItem.textContent = 'หน่วยงาน: ' + concatenatedValue + ', ผู้ใช้งาน: ' + username + ', รหัสผ่าน: ' + password;
+
+            document.getElementById('customerList').appendChild(listItem);
+
+            document.getElementById('type_password_id').value = '';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        } else {
+            alert('รหัสหน่วยงานไม่ถูกต้อง'); // Handle the case when no matching object is found
+        }
+    }
+
+
 </script>
 {% endblock content %}

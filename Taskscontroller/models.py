@@ -117,7 +117,6 @@ class ClientPassword(models.Model):
 class Category(models.Model):
     name_th =  models.CharField(max_length=255, default=None, null=True, blank=True)
     name_en =  models.CharField(max_length=255, default=None, null=True, blank=True)
-    engagement = models.ForeignKey('Engagement', on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         db_table = 'category'
@@ -126,7 +125,6 @@ class TypeJob(models.Model):
     name_th =  models.CharField(max_length=255, default=None, null=True, blank=True)
     name_en =  models.CharField(max_length=255, default=None, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         db_table = 'type_job'

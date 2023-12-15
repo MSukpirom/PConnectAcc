@@ -1,52 +1,323 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'index.html' %} {% block content %}
+<div class="container-fluid p-0">
+    <!--  Header End -->
+    <div class="row">
+        <div class="card w-100">
+            <div class="card-body p-4">
+                <h4 class="fw-semibold mb-4">สร้าง Engagement</h4>
+                <form method="post" action="{% url 'Taskscontroller:engagement_create' %}">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="" class="form-label fw-semibold">รหัสลูกค้า</label>
+                            <select name="client" id="" class="selectpicker" data-live-search="true" >
+                                {% for c in client %}
+                                <option value="{{ c.id }}" {% if c.id == selected_client_id %}selected{% endif %}>
+                                    {{ c.code }} {{ c.company_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="" class="form-label fw-semibold">รหัส Job</label>
+                            <input type="text" name="job_code" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="" class="form-label fw-semibold">วันที่เริ่มบริการ</label>
+                            <input type="date" name="start_date_service" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="" class="form-label fw-semibold">วันที่สิ้นสุดบริการ</label>
+                            <input type="date" name="end_date_service" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="start_date_period" class="form-label fw-semibold">รอบที่เริ่มให้บริการ</label>
+                            <input type="date" name="start_date_period" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="end_date_period" class="form-label fw-semibold">รอบที่สิ้นสุดให้บริการ</label>
+                            <input type="date" name="end_date_period" class="form-control">
+                        </div>
+                    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Egagement</title>
-</head>
+                    <!--Add Job-->
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <h5 class="fw-semibold">หมวดงาน</h5>
+                            <select name="category" class="form-select">
+                                {% for ca in category %}
+                                <option value="{{ ca.id }}">{{ ca.name_th }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkbox1">
+                                <label class="form-check-label fw-semibold" for="">บันทึกบัญชี</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2" id="typeContainer1" style="display: none;">
+                            <label for=""></label>
+                            <select name="" id="" class="form-select">
+                                <option selected>ประเภท</option>
+                                <option value="ครั้งเดียว">ครั้งเดียว</option>
+                                <option value="รายเดือน">รายเดือน</option>
+                                <option value="รายปี">รายปี</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" id="deadlineContainer1" style="display: none;">
+                            <label for=""></label>
+                            <select name="" id="" class="form-select">
+                                <option selected>เดดไลน์</option>
+                                <option value="ตามกฎหมาย">ตามกฎหมาย</option>
+                                <option value="ระบุเอง">ระบุเอง</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" id="notificationContainer1" style="display: none;">
+                            <label for=""></label>
+                            <select name="" id="" class="form-select">
+                                <option selected>การแจ้งเตือน</option>
+                                <option value="3">3 วัน</option>
+                                <option value="5">5 วัน</option>
+                                <option value="7">7 วัน</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" id="startdateContainer1" style="display: none;">
+                            <label for="">เริ่มต้น</label>
+                            <input type="date" name="" id="" class="form-control">
+                        </div>
+                        <div class="col-md-2" id="enddateContainer1" style="display: none;">
+                            <label for="">สิ้นสุด</label>
+                            <input type="date" name="" id="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2" id="reviewContainer1" style="display: none;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="">
+                                <label class="form-check-label" for="">ผู้ตรวจทาน</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2" id="approveContainer1" style="display: none;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="">
+                                <label class="form-check-label" for="">ผู้อนุมัติ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkbox2">
+                                <label class="form-check-label" for="">ตามอกสาร</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2" id="typeContainer2" style="display: none;">
+                            <label for=""></label>
+                            <select name="" id="" class="form-select">
+                                <option selected>ประเภท</option>
+                                <option value="ครั้งเดียว">ครั้งเดียว</option>
+                                <option value="รายเดือน">รายเดือน</option>
+                                <option value="รายปี">รายปี</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" id="deadlineContainer2" style="display: none;">
+                            <label for=""></label>
+                            <select name="" id="" class="form-select">
+                                <option selected>เดดไลน์</option>
+                                <option value="ตามกฎหมาย">ตามกฎหมาย</option>
+                                <option value="ระบุเอง">ระบุเอง</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" id="notificationContainer2" style="display: none;">
+                            <label for=""></label>
+                            <select name="" id="" class="form-select">
+                                <option selected>การแจ้งเตือน</option>
+                                <option value="3">3 วัน</option>
+                                <option value="5">5 วัน</option>
+                                <option value="7">7 วัน</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" id="startdateContainer2" style="display: none;">
+                            <label for="">เริ่มต้น</label>
+                            <input type="date" name="" id="" class="form-control">
+                        </div>
+                        <div class="col-md-2" id="enddateContainer2" style="display: none;">
+                            <label for="">สิ้นสุด</label>
+                            <input type="date" name="" id="" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2" id="reviewContainer2" style="display: none;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="">
+                                <label class="form-check-label" for="">ผู้ตรวจทาน</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2" id="approveContainer2" style="display: none;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="">
+                                <label class="form-check-label" for="">ผู้อนุมัติ</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkbox3">
+                                <label class="form-check-label" for="">เก็บเอกสาร</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2" id="typeContainer3" style="display: none;">
+                            <label for=""></label>
+                            <select name="" id="" class="form-select">
+                                <option selected>ประเภท</option>
+                                <option value="ครั้งเดียว">ครั้งเดียว</option>
+                                <option value="รายเดือน">รายเดือน</option>
+                                <option value="รายปี">รายปี</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" id="deadlineContainer3" style="display: none;">
+                            <label for=""></label>
+                            <select name="" id="" class="form-select">
+                                <option selected>เดดไลน์</option>
+                                <option value="ตามกฎหมาย">ตามกฎหมาย</option>
+                                <option value="ระบุเอง">ระบุเอง</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" id="notificationContainer3" style="display: none;">
+                            <label for=""></label>
+                            <select name="" id="" class="form-select">
+                                <option selected>การแจ้งเตือน</option>
+                                <option value="3">3 วัน</option>
+                                <option value="5">5 วัน</option>
+                                <option value="7">7 วัน</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" id="startdateContainer3" style="display: none;">
+                            <label for="">เริ่มต้น</label>
+                            <input type="date" name="" id="" class="form-control">
+                        </div>
+                        <div class="col-md-2" id="enddateContainer3" style="display: none;">
+                            <label for="">สิ้นสุด</label>
+                            <input type="date" name="" id="" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2" id="reviewContainer3" style="display: none;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="">
+                                <label class="form-check-label" for="">ผู้ตรวจทาน</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2" id="approveContainer3" style="display: none;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="">
+                                <label class="form-check-label" for="">ผู้อนุมัติ</label>
+                            </div>
+                        </div>
+                    </div>
 
-<body>
-    <h1>Create Egagement</h1>
-    <form method="post" action="{% url 'Taskscontroller:create_egagement' %}">
-        {% csrf_token %}
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-success">เพิ่มงาน</button>
+                        </div>
+                    </div>
 
-        <label for="client">รหัสลูกค้า</label>
-        <select name="client" id="client_select">
-            {% for client in clients %}
-            <option value="{{ client.id }}" {% if client.id == selected_client_id %}selected{% endif %}>
-                {{ client.code }} {{ client.company_name }}
-            </option>
-            {% endfor %}
-        </select>
-        <br>
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-success">เพิ่มหมวด</button>
+                        </div>
+                    </div>
 
-        <label for="e_job_code">รหัส Job</label>
-        <input type="text" name="e_job_code"><br>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-success">บันทึกข้อมูล</button>
+                        <button type="resert" class="btn btn-light">ล้างข้อมูล</button>
+                    </div>
 
-        <label for="e_sdate_service">วันที่เริ่มบริการ</label>
-        <input type="date" name="e_sdate_service"><br>
+                </form>
+                <div class="d-grid gap-2 d-md-flex">
+                    <a class="btn btn-dark" href="{% url 'Taskscontroller:engagement_list' %}">กลับไปยังหน้ารายการ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <label for="e_edate_service">วันที่สิ้นสุดบริการ</label>
-        <input type="date" name="e_edate_service"><br>
+<script>
+    var checkbox1 = document.getElementById('checkbox1');
+    // Get the input containers
+    var typeContainer1 = document.getElementById('typeContainer1');
+    var deadlineContainer1 = document.getElementById('deadlineContainer1');
+    var notificationContainer1 = document.getElementById('notificationContainer1');
+    var startdateContainer1 = document.getElementById('startdateContainer1');
+    var enddateContainer1 = document.getElementById('enddateContainer1');
+    var reviewContainer1 = document.getElementById('reviewContainer1');
+    var approveContainer1 = document.getElementById('approveContainer1');
 
-        <label for="e_sdate_period">รอบที่เริ่มให้บริการ</label>
-        <input type="date" name="e_sdate_period"><br>
+    checkbox1.addEventListener('change', function() {
+        // If checkbox1 is checked, show the input containers; otherwise, hide them
+        typeContainer1.style.display = checkbox1.checked ? 'block' : 'none';
+        deadlineContainer1.style.display = checkbox1.checked ? 'block' : 'none';
+        notificationContainer1.style.display = checkbox1.checked ? 'block' : 'none';
+        startdateContainer1.style.display = checkbox1.checked ? 'block' : 'none';
+        enddateContainer1.style.display = checkbox1.checked ? 'block' : 'none';
+        reviewContainer1.style.display = checkbox1.checked ? 'block' : 'none';
+        approveContainer1.style.display = checkbox1.checked ? 'block' : 'none';
+    });
 
-        <label for="e_edate_period">รอบที่สิ้นสุดให้บริการ</label>
-        <input type="date" name="e_edate_period"><br>
+    var checkbox2 = document.getElementById('checkbox2');
+    // Get the input containers
+    var typeContainer2 = document.getElementById('typeContainer2');
+    var deadlineContainer2 = document.getElementById('deadlineContainer2');
+    var notificationContainer2 = document.getElementById('notificationContainer2');
+    var startdateContainer2 = document.getElementById('startdateContainer2');
+    var enddateContainer2 = document.getElementById('enddateContainer2');
+    var reviewContainer2 = document.getElementById('reviewContainer2');
+    var approveContainer2 = document.getElementById('approveContainer2');
 
-        <label for="document_type_id">Document Type</label>
-        <select name="document_type_id">
-            {% for document_type in document_types %}
-            <option value="{{ document_type.id }}">{{ document_type.name_th }}</option>
-            {% endfor %}
-        </select><br>
+    checkbox2.addEventListener('change', function() {
+        // If checkbox1 is checked, show the input containers; otherwise, hide them
+        typeContainer2.style.display = checkbox2.checked ? 'block' : 'none';
+        deadlineContainer2.style.display = checkbox2.checked ? 'block' : 'none';
+        notificationContainer2.style.display = checkbox2.checked ? 'block' : 'none';
+        startdateContainer2.style.display = checkbox2.checked ? 'block' : 'none';
+        enddateContainer2.style.display = checkbox2.checked ? 'block' : 'none';
+        reviewContainer2.style.display = checkbox2.checked ? 'block' : 'none';
+        approveContainer2.style.display = checkbox2.checked ? 'block' : 'none';
+    });
 
-        <button type="submit">สร้างเอกสาร</button>
-    </form>
-    <a href="{% url 'Taskscontroller:list_egagement' %}">ยกเลิก กลับหน้าหลัก</a>
-</body>
+    var checkbox3 = document.getElementById('checkbox3');
+    // Get the input containers
+    var typeContainer3 = document.getElementById('typeContainer3');
+    var deadlineContainer3 = document.getElementById('deadlineContainer3');
+    var notificationContainer3 = document.getElementById('notificationContainer3');
+    var startdateContainer3 = document.getElementById('startdateContainer3');
+    var enddateContainer3 = document.getElementById('enddateContainer3');
+    var reviewContainer3 = document.getElementById('reviewContainer3');
+    var approveContainer3 = document.getElementById('approveContainer3');
 
-</html>
+    checkbox3.addEventListener('change', function() {
+        // If checkbox1 is checked, show the input containers; otherwise, hide them
+        typeContainer3.style.display = checkbox3.checked ? 'block' : 'none';
+        deadlineContainer3.style.display = checkbox3.checked ? 'block' : 'none';
+        notificationContainer3.style.display = checkbox3.checked ? 'block' : 'none';
+        startdateContainer3.style.display = checkbox3.checked ? 'block' : 'none';
+        enddateContainer3.style.display = checkbox3.checked ? 'block' : 'none';
+        reviewContainer3.style.display = checkbox3.checked ? 'block' : 'none';
+        approveContainer3.style.display = checkbox3.checked ? 'block' : 'none';
+    });
+</script>
+{% endblock content %}

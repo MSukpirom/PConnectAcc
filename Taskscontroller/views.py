@@ -9,6 +9,10 @@ from django.db.models import Count, F
 from django.utils.dateparse import parse_date
 from django.urls import reverse
 
+def testpage(request):
+    category = Category.objects.all()
+    return render(request, 'testpage.html',{'category':category})
+
 def test(request):
     subdistrict = Subdistrict.objects.values('id', 'name_th', 'zipcode')
     district = District.objects.values('id', 'name_th')
@@ -616,6 +620,7 @@ def client_create(request):
     type_job = TypeJob.objects.all()
     type_job_detail = TypeJobDetail.objects.all()
     client_status = ClientStatus.objects.values('id','name')
+    client_pws = ClientPassword.objects.all()
 
     if request.method == 'POST':
         c_code = request.POST.get('c_code', '')
@@ -653,11 +658,14 @@ def client_create(request):
         r_dbd_e_filling = request.POST.get('r_dbd_e_filling')
         r_dbd_e_filling_date = request.POST.get('r_dbd_e_filling_date')
 
-
         date_vat = parse_date(r_vat_date)
         date_sbt = parse_date(r_sbt_date)
         date_sso = parse_date(r_sso_date)
         date_dbd_e_filling = parse_date(r_dbd_e_filling_date)
+
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        type_password_id = request.POST.get('type_password_id')
 
         client = Client(
             code=c_code,
@@ -704,6 +712,14 @@ def client_create(request):
         )
         register_tax.save()
 
+        client_pws = ClientPassword(
+            username = username,
+            password = password,
+            client = client,
+            type_password = RegisterType.objects.filter(id=type_password_id).first(),
+        )
+        client_pws.save()
+
         contact.client = client
         contact.save()
 
@@ -719,6 +735,7 @@ def client_create(request):
         'type_job': type_job,
         'type_job_detail': type_job_detail,
         'client_status': client_status,
+        'client_pws':client_pws
     })
 
 def client_update(request, pk):
@@ -828,58 +845,119 @@ def client_update(request, pk):
         'client_status': client_status,
     })
 
-def client_password(request, client_id):
-    client = get_object_or_404(Client, pk=client_id)
-    register_types = RegisterType.objects.values('id', 'short_name', 'name_th')
-    client_pws = ClientPassword.objects.filter(client=client)
+# def client_password(request, client_id):
+#     client = get_object_or_404(Client, pk=client_id)
+#     register_types = RegisterType.objects.values('id', 'short_name', 'name_th')
+#     client_pws = ClientPassword.objects.filter(client=client)
 
-    if request.method == 'POST':
-        action = request.POST.get('action')
+#     if request.method == 'POST':
+#         action = request.POST.get('action')
 
-        if action == 'create':
-            type_password_id = request.POST.get('type_password_id')
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+#         if action == 'create':
+#             type_password_id = request.POST.get('type_password_id')
+#             username = request.POST.get('username')
+#             password = request.POST.get('password')
 
-            if type_password_id:
-                type_password = get_object_or_404(RegisterType, id=type_password_id)
+#             if type_password_id:
+#                 type_password = get_object_or_404(RegisterType, id=type_password_id)
 
-                new_client_pw = ClientPassword(
-                    type_password=type_password,
-                    username=username,
-                    password=password,
-                    client=client
-                )
-                new_client_pw.save()
+#                 new_client_pw = ClientPassword(
+#                     type_password=type_password,
+#                     username=username,
+#                     password=password,
+#                     client=client
+#                 )
+#                 new_client_pw.save()
 
-        elif action == 'update':
-            pw_id = request.POST.get('update_id')
-            updated_pw = get_object_or_404(ClientPassword, id=pw_id)
-            updated_pw.type_password = get_object_or_404(RegisterType, id=request.POST.get('update_type_password_id'))
-            updated_pw.username = request.POST.get('update_username')
-            updated_pw.password = request.POST.get('update_password')
-            updated_pw.save()
+#         elif action == 'update':
+#             pw_id = request.POST.get('update_id')
+#             updated_pw = get_object_or_404(ClientPassword, id=pw_id)
+#             updated_pw.type_password = get_object_or_404(RegisterType, id=request.POST.get('update_type_password_id'))
+#             updated_pw.username = request.POST.get('update_username')
+#             updated_pw.password = request.POST.get('update_password')
+#             updated_pw.save()
 
-        elif action == 'delete':
-            pw_id = request.POST.get('delete_id')
-            pw_to_delete = get_object_or_404(ClientPassword, id=pw_id)
-            pw_to_delete.delete()
+#         elif action == 'delete':
+#             pw_id = request.POST.get('delete_id')
+#             pw_to_delete = get_object_or_404(ClientPassword, id=pw_id)
+#             pw_to_delete.delete()
 
-        return redirect("Taskscontroller:client_password", client_id=client_id)
+#         return redirect("Taskscontroller:client_password", client_id=client_id)
 
-    context = {
-        'client': client,
-        'register_types': register_types,
-        'client_pws': client_pws,
-    }
+#     context = {
+#         'client': client,
+#         'register_types': register_types,
+#         'client_pws': client_pws,
+#     }
 
-    return render(request, 'clients/create.html', context)
+#     return render(request, 'clients/create.html', context)
 
 def engagement_list(request):
     return render(request,'engagement/list.html')
 
 def engagement_create(request):
-    return render(request,'engagement/create.html')
+    client = Client.objects.all()
+    category = Category.objects.values('id', 'name_th')
+    engegament_status = EngagementStatus.objects.all()
+    type_job = TypeJob.objects.all()
+
+    if request.method == 'POST':
+        client_id = request.POST.get('client')
+        job_code = request.POST.get('job_code')
+        start_date_service = request.POST.get('start_date_service')
+        end_date_service = request.POST.get('end_date_service')
+        start_date_period = request.POST.get('start_date_period')
+        end_date_period = request.POST.get('end_date_period')
+        category_id = request.POST.get('category_id')
+        engement_status = request.POST.get('engement_status')
+
+        sdate_service = parse_date(start_date_service)
+        edate_service = parse_date(end_date_service)
+        sdate_period = parse_date(start_date_period)
+        edate_period = parse_date(end_date_period)
+
+        type_job_name = request.POST.get('type_job_name')
+
+        type = request.POST.get('type')
+        deadline = request.POST.get('deadline')
+        notification = request.POST.get('notification')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+
+        t_deadline = parse_date(deadline)
+        t_start_date = parse_date(start_date)
+        t_end_date = parse_date(end_date)
+
+        type_job = TypeJob(
+            name_th = type_job_name,
+            category = Category.objects.filter(id=category_id).first(),
+        )
+        type_job.save()
+
+        type_job_detail = TypeJobDetail(
+            type = type,
+            deadline = t_deadline,
+            notification = notification,
+            start_date = t_start_date,
+            end_date = t_end_date,
+            type_job = type_job
+        )
+        type_job_detail.save()
+
+        engagement = Engagement(
+            client = Client.objects.filter(id=client_id).first(),
+            job_code = job_code,
+            start_date_service = sdate_service,
+            end_date_service = edate_service,
+            start_date_period = sdate_period,
+            end_date_period = edate_period,
+            category = Category.objects.filter(id=category_id).first(),
+            status = EngagementStatus.objects.filter(id=engement_status).first(),
+        )
+        engagement.save()
+
+        return redirect('Taskscontroller:engagement_list')
+    return render(request,'engagement/create.html',{'client':client,'category':category,'engegament_status':engegament_status,'type_job':type_job})
 
 def task_list(request):
     return render(request,'task_list.html')

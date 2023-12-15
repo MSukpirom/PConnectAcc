@@ -4,6 +4,7 @@ from .views import *
 app_name = 'Taskscontroller'
 
 urlpatterns = [
+    path('testpage/', testpage, name='testpage'),
     path('test2/', test, name='test'),
     path('demo/', demo, name='demo'),
     path('get_districts/', get_districts, name='GetDistrict'),
@@ -31,7 +32,7 @@ urlpatterns = [
     path('client_list/', client_list, name='client_list'),
     path('client_create/', client_create, name='client_create'),
     path('client/update/<int:pk>/', client_update, name='client_update'),
-    path('client_password/', client_password, name='client_password'),
+    # path('client_password/', client_password, name='client_password'),
     path('engagement_list/', engagement_list, name='engagement_list'),
     path('engagement_create/', engagement_create, name='engagement_create'),
     path('task_list/', task_list, name='task_list'),
