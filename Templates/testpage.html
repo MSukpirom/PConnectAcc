@@ -1,274 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>เพิ่มหมวดงาน</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 20px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Hide checkboxes initially */
+        .checkbox-container {
+            display: none;
+        }
+    </style>
 </head>
-<style>
-    .table-content {
-        width: 450px;
-        margin: 50px auto;
-        text-align: center;
-    }
 
-    td {
-        width: 100px;
-    }
-</style>
 <body>
-    <div class="table-content">
-        <table class="table table-borded table-responsive table-striped " id="table-list">
-            <thead class="table-dark">
-                <tr>
-                    <td>Name</td>
-                    <td>Gental</td>
-                    <td>eMail</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>James</td>
-                    <td>Male</td>
-                    <td>jhsdfgh@hotmail.com</td>
-                </tr>
-                <tr>
-                    <td>Sams</td>
-                    <td>Male</td>
-                    <td>hhfdfg@hotmail.com</td>
-                </tr>
-                <tr>
-                    <td>Mary</td>
-                    <td>Female</td>
-                    <td>vccch@gmail.com</td>
-                </tr>
-                <tr>
-                    <td>Ashly</td>
-                    <td>Female</td>
-                    <td>asss@gmail.com</td>
-                </tr>
-                <tr>
-                    <td>Eden</td>
-                    <td>Male</td>
-                    <td>edd@hotmail.com</td>
-                </tr>
-                <tr>
-                    <td>Daisy</td>
-                    <td>Female</td>
-                    <td>hhdf@gmail.com</td>
-                </tr>
-            </tbody>
-        </table>
-        <button class="btn btn-info" id="add"><span class="glyphicon glyphicon-plus-sign"></span>Add New Members</button>
+
+    <h1>เพิ่มหมวดงาน</h1>
+
+    <button onclick="addCategory(categoryCounter)">เพิ่มหมวดงาน</button>
+
+    <div id="categoryList">
+        <!-- รายการหมวดงานจะปรากฏที่นี่ -->
     </div>
+
     <script>
-        //bootstable.js
-        /*
-        Bootstable
-        @description  Javascript library to make HMTL tables editable, using Bootstrap
-        @version 1.1
-        @autor Tito Hinostroza
-        */
-        "use strict";
-        //Global variables
-        var params = null;  		//Parameters
-        var colsEdi =null;
-        var newColHtml = '<div class="btn-group pull-right">'+
-        '<button id="bEdit" type="button" class="btn btn-sm btn-default" onclick="rowEdit(this);">' +
-        '<span class="glyphicon glyphicon-pencil" > </span>'+
-        '</button>'+
-        '<button id="bElim" type="button" class="btn btn-sm btn-default" onclick="rowElim(this);">' +
-        '<span class="glyphicon glyphicon-trash" > </span>'+
-        '</button>'+
-        '<button id="bAcep" type="button" class="btn btn-sm btn-default" style="display:none;" onclick="rowAcep(this);">' + 
-        '<span class="glyphicon glyphicon-ok" > </span>'+
-        '</button>'+
-        '<button id="bCanc" type="button" class="btn btn-sm btn-default" style="display:none;" onclick="rowCancel(this);">' + 
-        '<span class="glyphicon glyphicon-remove" > </span>'+
-        '</button>'+
-            '</div>';
-        var colEdicHtml = '<td name="buttons">'+newColHtml+'</td>'; 
-            
-        $.fn.SetEditable = function (options) {
-            var defaults = {
-                columnsEd: null,         //Index to editable columns. If null all td editables. Ex.: "1,2,3,4,5"
-                $addButton: null,        //Jquery object of "Add" button
-                onEdit: function() {},   //Called after edition
-                onBeforeDelete: function() {}, //Called before deletion
-                onDelete: function() {}, //Called after deletion
-                onAdd: function() {}     //Called when added a new row
-            };
-            params = $.extend(defaults, options);
-            this.find('thead tr').append('<td name="buttons"><span class="glyphicon glyphicon-thumbs-up"></span></td>');  //encabezado vacío
-            this.find('tbody tr').append(colEdicHtml);
-            var $tabedi = this;   //Read reference to the current table, to resolve "this" here.
-            //Process "addButton" parameter
-            if (params.$addButton != null) {
-                //Se proporcionó parámetro
-                params.$addButton.click(function() {
-                    rowAddNew($tabedi.attr("id"));
-                });
-            }
-            //Process "columnsEd" parameter
-            if (params.columnsEd != null) {
-                //Extract felds
-                colsEdi = params.columnsEd.split(',');
-            }
-        };
-        function IterarCamposEdit($cols, tarea) {
-        //Itera por los campos editables de una fila
-            var n = 0;
-            $cols.each(function() {
-                n++;
-                if ($(this).attr('name')=='buttons') return;  //excluye columna de botones
-                if (!EsEditable(n-1)) return;   //noe s campo editable
-                tarea($(this));
-            });
-            
-            function EsEditable(idx) {
-            //Indica si la columna pasada está configurada para ser editable
-                if (colsEdi==null) {  //no se definió
-                    return true;  //todas son editable
-                } else {  //hay filtro de campos
-        //alert('verificando: ' + idx);
-                    for (var i = 0; i < colsEdi.length; i++) {
-                    if (idx == colsEdi[i]) return true;
-                    }
-                    return false;  //no se encontró
-                }
-            }
-        }
-        function FijModoNormal(but) {
-            $(but).parent().find('#bAcep').hide();
-            $(but).parent().find('#bCanc').hide();
-            $(but).parent().find('#bEdit').show();
-            $(but).parent().find('#bElim').show();
-            var $row = $(but).parents('tr');  //accede a la fila
-            $row.attr('id', '');  //quita marca
-        }
-        function FijModoEdit(but) {
-            $(but).parent().find('#bAcep').show();
-            $(but).parent().find('#bCanc').show();
-            $(but).parent().find('#bEdit').hide();
-            $(but).parent().find('#bElim').hide();
-            var $row = $(but).parents('tr');  //accede a la fila
-            $row.attr('id', 'editing');  //indica que está en edición
-        }
-        function ModoEdicion($row) {
-            if ($row.attr('id')=='editing') {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        function rowAcep(but) {
-        //Acepta los cambios de la edición
-            var $row = $(but).parents('tr');  //accede a la fila
-            var $cols = $row.find('td');  //lee campos
-            if (!ModoEdicion($row)) return;  //Ya está en edición
-            //Está en edición. Hay que finalizar la edición
-            IterarCamposEdit($cols, function($td) {  //itera por la columnas
-            var cont = $td.find('input').val(); //lee contenido del input
-            $td.html(cont);  //fija contenido y elimina controles
-            });
-            FijModoNormal(but);
-            params.onEdit($row);
-        }
-        function rowCancel(but) {
-        //Rechaza los cambios de la edición
-            var $row = $(but).parents('tr');  //accede a la fila
-            var $cols = $row.find('td');  //lee campos
-            if (!ModoEdicion($row)) return;  //Ya está en edición
-            //Está en edición. Hay que finalizar la edición
-            IterarCamposEdit($cols, function($td) {  //itera por la columnas
-                var cont = $td.find('div').html(); //lee contenido del div
-                $td.html(cont);  //fija contenido y elimina controles
-            });
-            FijModoNormal(but);
-        }
-        function rowEdit(but) {  //Inicia la edición de una fila
-            var $row = $(but).parents('tr');  //accede a la fila
-            var $cols = $row.find('td');  //lee campos
-            if (ModoEdicion($row)) return;  //Ya está en edición
-            //Pone en modo de edición
-            IterarCamposEdit($cols, function($td) {  //itera por la columnas
-                var cont = $td.html(); //lee contenido
-                var div = '<div style="display: none;">' + cont + '</div>';  //guarda contenido
-                var input = '<input class="form-control input-sm"  value="' + cont + '">';
-                $td.html(div + input);  //fija contenido
-            });
-            FijModoEdit(but);
-        }
-        function rowElim(but) {  //Elimina la fila actual
-            var $row = $(but).parents('tr');  //accede a la fila
-            params.onBeforeDelete($row);
-            $row.remove();
-            params.onDelete();
-        }
-        function rowAddNew(tabId) {  //Agrega fila a la tabla indicada.
-        var $tab_en_edic = $("#" + tabId);  //Table to edit
-            var $filas = $tab_en_edic.find('tbody tr');
-            if ($filas.length==0) {
-                //No hay filas de datos. Hay que crearlas completas
-                var $row = $tab_en_edic.find('thead tr');  //encabezado
-                var $cols = $row.find('th');  //lee campos
-                //construye html
-                var htmlDat = '';
-                $cols.each(function() {
-                    if ($(this).attr('name')=='buttons') {
-                        //Es columna de botones
-                        htmlDat = htmlDat + colEdicHtml;  //agrega botones
-                    } else {
-                        htmlDat = htmlDat + '<td></td>';
-                    }
-                });
-                $tab_en_edic.find('tbody').append('<tr>'+htmlDat+'</tr>');
-            } else {
-                //Hay otras filas, podemos clonar la última fila, para copiar los botones
-                var $ultFila = $tab_en_edic.find('tr:last');
-                $ultFila.clone().appendTo($ultFila.parent());  
-                $ultFila = $tab_en_edic.find('tr:last');
-                var $cols = $ultFila.find('td');  //lee campos
-                $cols.each(function() {
-                    if ($(this).attr('name')=='buttons') {
-                        //Es columna de botones
-                    } else {
-                        $(this).html('');  //limpia contenido
-                    }
-                });
-            }
-            params.onAdd();
-        }
-        function TableToCSV(tabId, separator) {  //Convierte tabla a CSV
-            var datFil = '';
-            var tmp = '';
-            var $tab_en_edic = $("#" + tabId);  //Table source
-            $tab_en_edic.find('tbody tr').each(function() {
-                //Termina la edición si es que existe
-                if (ModoEdicion($(this))) {
-                    $(this).find('#bAcep').click();  //acepta edición
-                }
-                var $cols = $(this).find('td');  //lee campos
-                datFil = '';
-                $cols.each(function() {
-                    if ($(this).attr('name')=='buttons') {
-                        //Es columna de botones
-                    } else {
-                        datFil = datFil + $(this).html() + separator;
-                    }
-                });
-                if (datFil!='') {
-                    datFil = datFil.substr(0, datFil.length-separator.length); 
-                }
-                tmp = tmp + datFil + '\n';
-            });
-            return tmp;
+        let categoryCounter = 1;
+        let selectedCategories = new Set();
+
+        function addCategory(counter) {
+            // สร้าง element สำหรับหมวดงาน
+            const categoryElement = document.createElement("div");
+            categoryElement.innerHTML = `
+                <label for="category${counter}">หมวดงาน ${counter}</label>
+                <select name="category_id" class="form-select" id="category${counter}"
+                    onchange="handleCategoryChange(${counter})">
+                    {% for ca in category %}
+                    <option value="{{ ca.id }}">{{ ca.name_th }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <div class="checkbox-container" id="checkboxContainer${counter}">
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <input type="checkbox" id="checkbox1${counter}" onchange="handleCheckboxChange(${counter}, 1)">
+                            <label for="checkbox1${counter}">บันทึกบัญชี</label>
+                        </div>
+                        <div id="dateInputContainer1_${counter}" style="display: none;">
+                            <label for="dateInput1_${counter}">วันที่:</label>
+                            <input type="date" id="dateInput1_${counter}">
+                               
+                            <label for="">ประเภท</label>
+                            <select name="" id="typeContainer1_${counter}" class="form-select">
+                                <option selected>ประเภท</option>
+                                <option value="ครั้งเดียว">ครั้งเดียว</option>
+                                <option value="รายเดือน">รายเดือน</option>
+                                <option value="รายปี">รายปี</option>
+                            </select>
+
+                            <label for="">เดดไลน์</label>
+                            <input type="date" name="" id="deadlineContainer1_${counter}" class="form-control">
+                            
+                            <label for=""></label>
+                            <select name="" id="notificationContainer1_${counter}" class="form-select">
+                                <option selected>การแจ้งเตือน</option>
+                                <option value="3">3 วัน</option>
+                                <option value="5">5 วัน</option>
+                                <option value="7">7 วัน</option>
+                            </select>
+                            
+                            <label for="">เริ่มต้น</label>
+                            <input type="date" name="" id="startdateContainer1_${counter}" class="form-control">
+
+                            <label for="">สิ้นสุด</label>
+                            <input type="date" name="" id="enddateContaine1r_${counter}" class="form-control">
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="reviewContainer1_${counter}">
+                                <label class="form-check-label" for="">ผู้ตรวจทาน</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="approveContainer1_${counter}">
+                                <label class="form-check-label" for="">ผู้อนุมัติ</label>
+                            </div>
+
+                            <br>
+                        </div>
+                    </div>
+                    <input type="checkbox" id="checkbox2${counter}" onchange="handleCheckboxChange(${counter}, 2)">
+                    <label for="checkbox2${counter}">ตามเอกสาร</label>
+                    <div id="dateInputContainer2_${counter}" style="display: none;">
+                        <label for="dateInput2_${counter}">วันที่:</label>
+                        <input type="date" id="dateInput2_${counter}">
+
+                        <label for="">ประเภท</label>
+                        <select name="" id="typeContainer2_${counter}" class="form-select">
+                            <option selected>ประเภท</option>
+                            <option value="ครั้งเดียว">ครั้งเดียว</option>
+                            <option value="รายเดือน">รายเดือน</option>
+                            <option value="รายปี">รายปี</option>
+                        </select>
+
+                        <label for="">เดดไลน์</label>
+                        <input type="date" name="" id="deadlineContainer2_${counter}" class="form-control">
+                            
+                        <label for=""></label>
+                        <select name="" id="notificationContainer2_${counter}" class="form-select">
+                            <option selected>การแจ้งเตือน</option>
+                            <option value="3">3 วัน</option>
+                            <option value="5">5 วัน</option>
+                            <option value="7">7 วัน</option>
+                        </select>
+                            
+                        <label for="">เริ่มต้น</label>
+                        <input type="date" name="" id="startdateContainer2_${counter}" class="form-control">
+
+                        <label for="">สิ้นสุด</label>
+                        <input type="date" name="" id="enddateContaine2r_${counter}" class="form-control">
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="reviewContainer2_${counter}">
+                            <label class="form-check-label" for="">ผู้ตรวจทาน</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="approveContainer2_${counter}">
+                            <label class="form-check-label" for="">ผู้อนุมัติ</label>
+                        </div>
+                            
+                        <br>
+                    </div>
+                    <input type="checkbox" id="checkbox3${counter}" onchange="handleCheckboxChange(${counter}, 3)">
+                    <label for="checkbox3${counter}">เก็บเอกสาร</label>
+                    <div id="dateInputContainer3_${counter}" style="display: none;">
+                        <label for="dateInput3_${counter}">วันที่:</label>
+                        <input type="date" id="dateInput3_${counter}">
+
+                        <label for="">ประเภท</label>
+                        <select name="" id="typeContainer3_${counter}" class="form-select">
+                            <option selected>ประเภท</option>
+                            <option value="ครั้งเดียว">ครั้งเดียว</option>
+                            <option value="รายเดือน">รายเดือน</option>
+                            <option value="รายปี">รายปี</option>
+                        </select>
+
+                        <label for="">เดดไลน์</label>
+                        <input type="date" name="" id="deadlineContainer3_${counter}" class="form-control">
+                            
+                        <label for=""></label>
+                        <select name="" id="notificationContainer3_${counter}" class="form-select">
+                            <option selected>การแจ้งเตือน</option>
+                            <option value="3">3 วัน</option>
+                            <option value="5">5 วัน</option>
+                            <option value="7">7 วัน</option>
+                        </select>
+                            
+                        <label for="">เริ่มต้น</label>
+                        <input type="date" name="" id="startdateContainer3_${counter}" class="form-control">
+
+                        <label for="">สิ้นสุด</label>
+                        <input type="date" name="" id="enddateContaine3r_${counter}" class="form-control">
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="reviewContainer3_${counter}">
+                            <label class="form-check-label" for="">ผู้ตรวจทาน</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="approveContainer3_${counter}">
+                            <label class="form-check-label" for="">ผู้อนุมัติ</label>
+                        </div>
+
+                        <br>
+                    </div>
+                </div>
+                <br>
+            `;
+            // เพิ่ม element ลงในรายการหมวดงาน
+            document.getElementById("categoryList").appendChild(categoryElement);
+            categoryCounter++;
         }
 
-        //apply
-        $("#table-list").SetEditable({
-                $addButton: $('#add')
-            });
+        function handleCategoryChange(counter) {
+            const categorySelect = document.getElementById(`category${counter}`);
+            const checkboxContainer = document.getElementById(`checkboxContainer${counter}`);
+
+            // Check for duplicate category_id
+            const selectedCategoryId = categorySelect.value;
+            if (selectedCategoryId && selectedCategories.has(selectedCategoryId)) {
+                alert("ไม่สามารถเลือกหมวดงานเดิมซ้ำได้");
+                categorySelect.value = ""; // Reset the dropdown value
+                checkboxContainer.style.display = 'none'; // Hide checkboxes
+                hideAllDateInputs(counter); // Hide all date inputs
+                return;
+            }
+
+            // Show checkboxes if a category_id is selected
+            if (selectedCategoryId) {
+                checkboxContainer.style.display = 'block';
+                selectedCategories.add(selectedCategoryId);
+            } else {
+                checkboxContainer.style.display = 'none';
+                hideAllDateInputs(counter); // Hide all date inputs when no category is selected
+            }
+        }
+
+        function handleCheckboxChange(counter, checkboxNumber) {
+            const checkbox = document.getElementById(`checkbox${checkboxNumber}${counter}`);
+            const dateInputContainer = document.getElementById(`dateInputContainer${checkboxNumber}_${counter}`);
+
+            // Show/hide date input based on checkbox state
+            dateInputContainer.style.display = checkbox.checked ? 'block' : 'none';
+        }
+
+        function hideAllDateInputs(counter) {
+            for (let i = 1; i <= 3; i++) {
+                const dateInputContainer = document.getElementById(`dateInputContainer${i}_${counter}`);
+                if (dateInputContainer) {
+                    dateInputContainer.style.display = 'none';
+                }
+            }
+        }
     </script>
+
 </body>
+
 </html>

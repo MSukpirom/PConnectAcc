@@ -147,10 +147,13 @@ def test(request):
     # except (RegisterType.DoesNotExist, Client.DoesNotExist):
     #     return render(request, 'error404.html')
 
-def parse_date(date_str):
+def parse_date(date_string):
+    if not date_string:
+        return None
     try:
-        return datetime.strptime(date_str, "%Y-%m-%d")
+        return datetime.strptime(date_string, "%Y-%m-%d")
     except ValueError:
+        print(f"Error parsing date string: {date_string}")
         return None
 
 # def create_client(request):
@@ -911,11 +914,6 @@ def engagement_create(request):
         category_id = request.POST.get('category_id')
         engement_status = request.POST.get('engement_status')
 
-        sdate_service = parse_date(start_date_service)
-        edate_service = parse_date(end_date_service)
-        sdate_period = parse_date(start_date_period)
-        edate_period = parse_date(end_date_period)
-
         type_job_name = request.POST.get('type_job_name')
 
         type = request.POST.get('type')
@@ -924,6 +922,10 @@ def engagement_create(request):
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
 
+        sdate_service = parse_date(start_date_service)
+        edate_service = parse_date(end_date_service)
+        sdate_period = parse_date(start_date_period)
+        edate_period = parse_date(end_date_period)
         t_deadline = parse_date(deadline)
         t_start_date = parse_date(start_date)
         t_end_date = parse_date(end_date)
