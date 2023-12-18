@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&display=swap');
+
 :root,
 [data-bs-theme="light"] {
   --bs-blue: #3b7ddd;
@@ -147,6 +149,7 @@ body {
   line-height: var(--bs-body-line-height);
   margin: 0;
   text-align: var(--bs-body-text-align);
+  font-family: 'Prompt', sans-serif;
 }
 hr {
   border: 0;
@@ -13338,6 +13341,9 @@ span.flatpickr-weekday {
   position: sticky;
   top: 0;
   width: 260px;
+}
+.checkbox-container {
+  display: none;
 }
 
 /*# sourceMappingURL=app.css.map*/

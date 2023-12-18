@@ -896,70 +896,85 @@ def client_update(request, pk):
 #     return render(request, 'clients/create.html', context)
 
 def engagement_list(request):
-    return render(request,'engagement/list.html')
+    engagement = Engagement.objects.all()
+    type_job_detail = TypeJobDetail.objects.all()
+    return render(request,'engagement/list.html',{'engagement':engagement})
+
+def get_type_job_detail(category_id):
+    if category_id == "ภาษี":
+        return [6, 7, 8, 9]
+    else:
+        return [3, 4, 5]
 
 def engagement_create(request):
-    client = Client.objects.all()
+    client = Client.objects.values('id', 'code', 'company_name')
     category = Category.objects.values('id', 'name_th')
-    engegament_status = EngagementStatus.objects.all()
+    engagement_status = EngagementStatus.objects.all()
     type_job = TypeJob.objects.all()
 
     if request.method == 'POST':
-        client_id = request.POST.get('client')
+        client_id = request.POST.get('client_id')
         job_code = request.POST.get('job_code')
         start_date_service = request.POST.get('start_date_service')
         end_date_service = request.POST.get('end_date_service')
         start_date_period = request.POST.get('start_date_period')
         end_date_period = request.POST.get('end_date_period')
         category_id = request.POST.get('category_id')
-        engement_status = request.POST.get('engement_status')
-
-        type_job_name = request.POST.get('type_job_name')
-
-        type = request.POST.get('type')
-        deadline = request.POST.get('deadline')
-        notification = request.POST.get('notification')
-        start_date = request.POST.get('start_date')
-        end_date = request.POST.get('end_date')
-
+        engagement_status_id = request.POST.get('engagement_status')
+        
         sdate_service = parse_date(start_date_service)
         edate_service = parse_date(end_date_service)
         sdate_period = parse_date(start_date_period)
         edate_period = parse_date(end_date_period)
-        t_deadline = parse_date(deadline)
-        t_start_date = parse_date(start_date)
-        t_end_date = parse_date(end_date)
 
-        type_job = TypeJob(
-            name_th = type_job_name,
-            category = Category.objects.filter(id=category_id).first(),
-        )
-        type_job.save()
+        type_job_id = request.POST.get('type_job_id')
+        category_instance = get_object_or_404(Category, id=category_id)
 
-        type_job_detail = TypeJobDetail(
-            type = type,
-            deadline = t_deadline,
-            notification = notification,
-            start_date = t_start_date,
-            end_date = t_end_date,
-            type_job = type_job
-        )
-        type_job_detail.save()
+        with transaction.atomic():
+            type_job = TypeJob.objects.filter(id=type_job_id).first(),
+            type_job.save()
 
-        engagement = Engagement(
-            client = Client.objects.filter(id=client_id).first(),
-            job_code = job_code,
-            start_date_service = sdate_service,
-            end_date_service = edate_service,
-            start_date_period = sdate_period,
-            end_date_period = edate_period,
-            category = Category.objects.filter(id=category_id).first(),
-            status = EngagementStatus.objects.filter(id=engement_status).first(),
-        )
-        engagement.save()
+            # นำข้อมูลที่ต้องการสร้าง TypeJobDetail มาจาก request.POST หรือ input อื่น ๆ
+            type_detail = request.POST.get('type_detail')
+            deadline = request.POST.get('deadline')
+            notification = request.POST.get('notification')
+            start_date = request.POST.get('start_date')
+            end_date = request.POST.get('end_date')
+
+            t_deadline = parse_date(deadline)
+            t_start_date = parse_date(start_date)
+            t_end_date = parse_date(end_date)
+
+            if type_job_id == "4":
+                # สร้าง TypeJobDetail สำหรับ id 6, 7, 8, 9
+                for type_job_id in [6, 7, 8, 9]:
+                    type_job = get_object_or_404(TypeJob, pk=type_job_id)
+                
+                # สร้าง TypeJobDetail
+                type_job_detail = TypeJobDetail(
+                    type=type_detail,
+                    deadline=t_deadline,
+                    notification=notification,
+                    start_date=t_start_date,
+                    end_date=t_end_date,
+                    type_job=type_job
+                )
+                type_job_detail.save()
+
+            engagement = Engagement(
+                client=Client.objects.filter(id=client_id).first(),
+                job_code=job_code,
+                start_date_service=sdate_service,
+                end_date_service=edate_service,
+                start_date_period=sdate_period,
+                end_date_period=edate_period,
+                category=category_instance,
+                status=EngagementStatus.objects.filter(id=engagement_status_id).first(),
+            )
+            engagement.save()
 
         return redirect('Taskscontroller:engagement_list')
-    return render(request,'engagement/create.html',{'client':client,'category':category,'engegament_status':engegament_status,'type_job':type_job})
+    return render(request,'engagement/create.html',{'client': client, 'category': category, 'engagement_status': engagement_status, 'type_job': type_job})
 
 def task_list(request):
     return render(request,'task_list.html')

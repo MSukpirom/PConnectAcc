@@ -3,7 +3,7 @@
     <div class="row">
         <div class="card w-100">
             <div class="card-body p-4">
-                <h4 class="fw-semibold mb-4">Lists</h4>
+                <h4 class="fw-semibold mb-4">ข้อมูล Engagement</h4>
                 <div>
                     <a href="{% url 'Taskscontroller:engagement_create'%}">
                         <button type="button" class="btn btn-success">เพิ่มข้อมูล<i class="bi bi-plus-circle-fill"></i></button>
@@ -13,16 +13,59 @@
                     <table class="table text-nowrap mb-0">
                         <thead class="text-dark fs-4">
                             <tr>
-                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Engagemnt</h6></th>
+                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Engagement</h6></th>
                                 <th class="border-bottom-0"><h6 class="fw-semibold mb-0">รหัสลูกค้า</h6></th>
-                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0">ชื่อบริษัท</h6></th>
-                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0">เลขที่นิติ</h6></th>
                                 <th class="border-bottom-0"><h6 class="fw-semibold mb-0">ผู้รับผิดชอบ</h6></th>
+                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0"></h6></th>
+                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0"></h6></th>
+                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0"></h6></th>
+                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0"></h6></th>
                                 <th class="border-bottom-0"><h6 class="fw-semibold mb-0">สถานะ</h6></th>
+                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0">แก้ไข/ลบ</h6></th>
                                 <th class="border-bottom-0"></th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for e in engagement %}
+                            <tr>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-normal">{{ e.job_code }}</h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-normal">{{ e.client.code }} {{ e.client.company_name }}</h6>
+                                    <span class="fw-normal">{{ e.client.tax_id }}</span>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-normal"></h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <p class="mb-0 fw-normal">{{ e.start_date_service }}</p>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-normal">{{ e.end_date_service }}</h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-normal">รายปี</h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-normal">รายปี</h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-normal">Lv.3</h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="fw-normal">{{ e.status.status }}</h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <a href="{% url 'Taskscontroller:client_update' pk=forloop.counter %}" class="btn btn-sm btn-neutral">
+                                        <button type="button" class="btn btn-outline-warning fw-normal">แก้ไข</button>
+                                    </a>
+                                    <a href="{% url 'Taskscontroller:delete_client' pk=forloop.counter %}" onclick="deleted()">
+                                        <i class="fa-solid fa-trash-can fa-lg" style="color: #ff0000;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
