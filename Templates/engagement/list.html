@@ -4,24 +4,25 @@
         <div class="card w-100">
             <div class="card-body p-4">
                 <h4 class="fw-semibold mb-4">ข้อมูล Engagement</h4>
-                <div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a href="{% url 'Taskscontroller:engagement_create'%}">
-                        <button type="button" class="btn btn-success">เพิ่มข้อมูล<i class="bi bi-plus-circle-fill"></i></button>
+                        <button type="button" class="btn btn-success">
+                            <i class="fa-solid fa-file-circle-plus"></i>
+                            <span>เพิ่ม</span>
+                        </button>
                     </a>
                 </div>
                 <div class="table-responsive">
                     <table class="table text-nowrap mb-0">
                         <thead class="text-dark fs-4">
                             <tr>
-                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0">Engagement</h6></th>
+                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0">เลขที่</h6></th>
                                 <th class="border-bottom-0"><h6 class="fw-semibold mb-0">รหัสลูกค้า</h6></th>
                                 <th class="border-bottom-0"><h6 class="fw-semibold mb-0">ผู้รับผิดชอบ</h6></th>
-                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0"></h6></th>
-                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0"></h6></th>
-                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0"></h6></th>
-                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0"></h6></th>
+                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0">เริ่มให้บริการ</h6></th>
+                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0">สิ้นสุดให้บริการ</h6></th>
                                 <th class="border-bottom-0"><h6 class="fw-semibold mb-0">สถานะ</h6></th>
-                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0">แก้ไข/ลบ</h6></th>
+                                <th class="border-bottom-0"><h6 class="fw-semibold mb-0"></h6></th>
                                 <th class="border-bottom-0"></th>
                             </tr>
                         </thead>
@@ -29,7 +30,7 @@
                             {% for e in engagement %}
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="fw-normal">{{ e.job_code }}</h6>
+                                    <a class="fw-normal" href="{{ e.job_code }}">{{ e.job_code }}</a>
                                 </td>
                                 <td class="border-bottom-0">
                                     <h6 class="fw-normal">{{ e.client.code }} {{ e.client.company_name }}</h6>
@@ -43,15 +44,6 @@
                                 </td>
                                 <td class="border-bottom-0">
                                     <h6 class="fw-normal">{{ e.end_date_service }}</h6>
-                                </td>
-                                <td class="border-bottom-0">
-                                    <h6 class="fw-normal">รายปี</h6>
-                                </td>
-                                <td class="border-bottom-0">
-                                    <h6 class="fw-normal">รายปี</h6>
-                                </td>
-                                <td class="border-bottom-0">
-                                    <h6 class="fw-normal">Lv.3</h6>
                                 </td>
                                 <td class="border-bottom-0">
                                     <h6 class="fw-normal">{{ e.status.status }}</h6>

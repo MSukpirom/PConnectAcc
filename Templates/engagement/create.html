@@ -4,6 +4,9 @@
     <div class="row">
         <div class="card w-100">
             <div class="card-body p-4">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <p>สถานะ <button type="button" class="btn btn-primary">{{ engagement_status.status }}</button></p>
+                </div>
                 <h4 class="fw-semibold mb-4">สร้าง Engagement</h4>
                 <form method="post" action="{% url 'Taskscontroller:engagement_create' %}">
                     {% csrf_token %}
