@@ -915,7 +915,7 @@ def engagement_create(request):
         start_date_period = request.POST.get('start_date_period')
         end_date_period = request.POST.get('end_date_period')
         category_id = request.POST.get('category_id')
-        
+
         sdate_service = parse_date(start_date_service)
         edate_service = parse_date(end_date_service)
         sdate_period = parse_date(start_date_period)

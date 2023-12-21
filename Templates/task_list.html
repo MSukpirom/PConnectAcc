@@ -28,19 +28,19 @@
                 </div>
                 <div class="btn-group" role="group" aria-label="Default button group">
                     <button type="button" class="btn btn-outline-primary">Deadline</button>
-                    <button type="button" class="btn btn-outline-primary">คนดูแล</button>
+                    <button type="button" class="btn btn-outline-primary">ผู้ดูแล</button>
                     <button type="button" class="btn btn-outline-primary">ประเภทงาน</button>
                     <button type="button" class="btn btn-outline-primary">Period</button>
                 </div>
 
                 <div class="row vh-100">
-                    <!-- To do tasks -->
-                    <div class="col-3 shadow-sm mx-2 bg-light py-2" id="todo" ondrop="drop(event)"
+                    <!-- Open Job tasks -->
+                    <div class="col-sm shadow-sm mx-2 bg-light py-2" id="open" ondrop="drop(event)"
                         ondragover="allowDrop(event)">
                         <h5>เปิดงาน</h5>
                         <div class="d-flex flex-column mt-3">
                             <!-- card -->
-                            <div id="todotarget1" ondragstart="dragStart(event)" draggable="true"
+                            <div id="opentarget1" ondragstart="dragStart(event)" draggable="true"
                                 class="card rounded-0 w-100 mb-3 border-0 border-start border-primary border-3 shadow-sm">
                                 <div class="card-body px-3 py-3">
                                     <div class="card-text mb-2">Details of Task</div>
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                             <!-- card -->
-                            <div id="todotarget2" ondragstart="dragStart(event)" draggable="true"
+                            <div id="opentarget2" ondragstart="dragStart(event)" draggable="true"
                                 class="card rounded-0 w-100 mb-3 border-0 border-start border-primary border-3 shadow-sm">
                                 <div class="card-body px-3 py-3">
                                     <div class="card-text mb-2">Details of Task</div>
@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                             <!-- card -->
-                            <div id="todotarget3" ondragstart="dragStart(event)" draggable="true"
+                            <div id="opentarget3" ondragstart="dragStart(event)" draggable="true"
                                 class="card rounded-0 w-100 mb-3 border-0 border-start border-primary border-3 shadow-sm">
                                 <div class="card-body px-3 py-3">
                                     <div class="card-text mb-2">Details of Task</div>
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <!-- To do tasks -->
-                    <div class="col-3 shadow-sm mx-2 bg-light py-2" id="progress" ondrop="drop(event)"
+                    <div class="col-sm shadow-sm mx-2 bg-light py-2" id="progress" ondrop="drop(event)"
                         ondragover="allowDrop(event)">
                         <h5>กำลังดำเนินงาน</h5>
                         <div class="d-flex flex-column align-items-center justify-content-center mt-3">
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     <!-- To do tasks -->
-                    <div class="col-3 shadow-sm mx-2 bg-light py-2" id="review" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <div class="col-sm shadow-sm mx-2 bg-light py-2" id="review" ondrop="drop(event)" ondragover="allowDrop(event)">
                         <h5>รอตรวจสอบ</h5>
                         <div class="d-flex flex-column align-items-center justify-content-center mt-3">
                             <!-- card -->
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                     <!-- tasks pending -->
-                    <div class="col-3 shadow-sm mx-2 bg-light py-2" id="pending" ondrop="drop(event)"
+                    <div class="col-sm shadow-sm mx-2 bg-light py-2" id="pending" ondrop="drop(event)"
                         ondragover="allowDrop(event)">
                         <h5>รอลูกค้า</h5>
                         <div class="d-flex flex-column align-items-center justify-content-center mt-3">
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <!-- tasks completed -->
-                    <div class="col-3 shadow-sm mx-2 bg-light py-2" id="completed" ondrop="drop(event)"
+                    <div class="col-sm shadow-sm mx-2 bg-light py-2" id="completed" ondrop="drop(event)"
                         ondragover="allowDrop(event)">
                         <h5>เรียบร้อยแล้ว</h5>
                         <div class="d-flex flex-column align-items-center justify-content-center mt-3">
@@ -160,8 +160,8 @@
             event.preventDefault();
             const data = event.dataTransfer.getData("Text");
             event.target.appendChild(document.getElementById(data));
-            // todo list
-            if (event.target.id == "todo") {
+            // open list
+            if (event.target.id == "open") {
                 document.getElementById(data).classList.remove("border-warning", "border-success");
                 document.getElementById(data).classList.add("border-primary");
                 document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove(
@@ -192,6 +192,16 @@
             }
             // pending list
             if (event.target.id == "pending") {
+                document.getElementById(data).classList.remove("border-warning", "border-success");
+                document.getElementById(data).classList.add("border-success");
+                document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove(
+                    "bg-warning",
+                    "bg-success");
+                document.getElementById(data).getElementsByClassName("project-name")[0].classList.add(
+                    "bg-success")
+            }
+            // review list
+            if (event.target.id == "review") {
                 document.getElementById(data).classList.remove("border-warning", "border-success");
                 document.getElementById(data).classList.add("border-success");
                 document.getElementById(data).getElementsByClassName("project-name")[0].classList.remove(

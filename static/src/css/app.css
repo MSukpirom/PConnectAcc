@@ -11779,7 +11779,7 @@ fieldset:disabled .btn {
 }
 @media (min-width: 992px) {
   .content {
-    padding: 3rem 3rem 1.5rem;
+    padding: 2rem 2rem 0.75rem;
   }
 }
 .navbar-nav .dropdown-menu {
@@ -12055,8 +12055,8 @@ body {
 }
 .sidebar {
   direction: ltr;
-  max-width: 260px;
-  min-width: 260px;
+  max-width: 230px;
+  min-width: 230px;
 }
 .sidebar,
 .sidebar-content {
@@ -12145,7 +12145,7 @@ a.sidebar-link svg {
   width: 26px;
 }
 .sidebar.collapsed {
-  margin-left: -260px;
+  margin-left: -230px;
 }
 @media (min-width: 1px) and (max-width: 991.98px) {
   .sidebar {
@@ -13339,7 +13339,7 @@ span.flatpickr-weekday {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  width: 260px;
+  width: 230px;
 }
 .checkbox-container {
   display: none;
