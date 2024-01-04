@@ -1,6 +1,136 @@
 {% extends 'index.html' %}
 {% block content %}
-    <div>
-        <h1>Setting</h1>
+<div>
+    <h1>Setting</h1>
+
+    <h1>Category Management</h1>
+
+    <form id="categoryForm">
+        <label for="category">Category:</label>
+        <input type="text" id="category" required>
+        <button type="button" onclick="addCategory()">Add Category</button>
+    </form>
+
+    <form id="categoryTypeForm">
+        <label for="categoryType">Category Type:</label>
+        <input type="text" id="categoryType" required>
+        <select id="categorySelect" required>
+            <option value="">Select Category</option>
+            <!-- Categories will be dynamically added here -->
+        </select>
+        <button type="button" onclick="addCategoryType()">Add Category Type</button>
+    </form>
+
+    <form id="categoryTypeDetailForm">
+        <label for="categoryTypeDetail">Category Type Detail:</label>
+        <input type="text" id="categoryTypeDetail" required>
+        <select id="categoryTypeSelect" required>
+            <option value="">Select Category Type</option>
+            <!-- Category types will be dynamically added here -->
+        </select>
+        <button type="button" onclick="addCategoryTypeDetail()">Add Category Type Detail</button>
+    </form>
+
+    <div id="output">
+        <h2>Current Data:</h2>
+        <ul id="outputList"></ul>
     </div>
+</div>
+
+<script>
+    // Sample data structure to store categories, category types, and details
+    const data = {
+        categories: [],
+        categoryTypes: [],
+        categoryTypeDetails: []
+    };
+    // Function to add a new category
+    function addCategory() {
+        const categoryInput = document.getElementById('category');
+        const categoryValue = categoryInput.value.trim();
+        if (categoryValue) {
+            data.categories.push(categoryValue);
+            updateCategorySelect();
+            categoryInput.value = '';
+            displayData();
+        }
+    }
+    // Function to add a new category type
+    function addCategoryType() {
+        const categoryTypeInput = document.getElementById('categoryType');
+        const categoryTypeSelect = document.getElementById('categorySelect');
+        const categoryTypeValue = categoryTypeInput.value.trim();
+        const selectedCategory = categoryTypeSelect.value;
+        if (categoryTypeValue && selectedCategory) {
+            const categoryType = {
+                category: selectedCategory,
+                type: categoryTypeValue
+            };
+            data.categoryTypes.push(categoryType);
+            updateCategoryTypeSelect();
+            categoryTypeInput.value = '';
+            displayData();
+        }
+    }
+    // Function to add a new category type detail
+    function addCategoryTypeDetail() {
+        const categoryTypeDetailInput = document.getElementById('categoryTypeDetail');
+        const categoryTypeSelect = document.getElementById('categoryTypeSelect');
+        const categoryTypeDetailValue = categoryTypeDetailInput.value.trim();
+        const selectedCategoryType = categoryTypeSelect.value;
+        if (categoryTypeDetailValue && selectedCategoryType) {
+            const categoryTypeDetail = {
+                type: selectedCategoryType,
+                detail: categoryTypeDetailValue
+            };
+            data.categoryTypeDetails.push(categoryTypeDetail);
+            categoryTypeDetailInput.value = '';
+            displayData();
+        }
+    }
+    // Function to update the category select options
+    function updateCategorySelect() {
+        const categorySelect = document.getElementById('categorySelect');
+        categorySelect.innerHTML = '<option value="">Select Category</option>';
+        data.categories.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category;
+            option.textContent = category;
+            categorySelect.appendChild(option);
+        });
+    }
+    // Function to update the category type select options
+    function updateCategoryTypeSelect() {
+        const categoryTypeSelect = document.getElementById('categoryTypeSelect');
+        categoryTypeSelect.innerHTML = '<option value="">Select Category Type</option>';
+        data.categoryTypes.forEach(categoryType => {
+            const option = document.createElement('option');
+            option.value = categoryType.type;
+            option.textContent = categoryType.type;
+            categoryTypeSelect.appendChild(option);
+        });
+    }
+    // Function to display the current data
+    function displayData() {
+        const outputList = document.getElementById('outputList');
+        outputList.innerHTML = '';
+        data.categories.forEach(category => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Category: ${category}`;
+            outputList.appendChild(listItem);
+        });
+        data.categoryTypes.forEach(categoryType => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Category Type: ${categoryType.type} (Category: ${categoryType.category})`;
+            outputList.appendChild(listItem);
+        });
+        data.categoryTypeDetails.forEach(categoryTypeDetail => {
+            const listItem = document.createElement('li');
+            listItem.textContent =
+                `Category Type Detail: ${categoryTypeDetail.detail} (Type: ${categoryTypeDetail.type})`;
+            outputList.appendChild(listItem);
+        });
+    }
+</script>
+
 {% endblock content %}

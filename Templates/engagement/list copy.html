@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>รายการสัญญาว่าจ้าง</h1>
-    <a href="{% url 'Taskscontroller:create_egagement' %}">เพิ่ม</a>
+    <a href="{% url 'AccountTask:create_egagement' %}">เพิ่ม</a>
     <h3>รายละเอียด</h3>
     <table>
         <thead>
@@ -39,10 +39,10 @@
                     <td>{{ egagement.reviewer }}</td>
                     <td>{{ egagement.document_type.name_th }}</td>
                     <td>
-                        <a href="{% url 'Taskscontroller:update_egagement' pk=egagement.id %}" onclick="updated()">Edit</a>
+                        <a href="{% url 'AccountTask:update_egagement' pk=egagement.id %}" onclick="updated()">Edit</a>
                     </td>
                     <td>
-                        <a href="{% url 'Taskscontroller:delete_egagement' pk=egagement.id %}" onclick="deleted()">Delete</a>
+                        <a href="{% url 'AccountTask:delete_egagement' pk=egagement.id %}" onclick="deleted()">Delete</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -81,7 +81,7 @@
             <h5 class="mb-0">รายการ</h5>
         </div>
         <div style="text-align: right;">
-            <a href="{% url 'Taskscontroller:create_egagement' %}" class="btn btn-sm btn-success">เพิ่มรายการ <i class="bi bi-plus-circle-fill"></i></a>
+            <a href="{% url 'AccountTask:create_egagement' %}" class="btn btn-sm btn-success">เพิ่มรายการ <i class="bi bi-plus-circle-fill"></i></a>
         </div>
         <div class="table-responsive">
             <table class="table table-hover table-nowrap">
@@ -111,8 +111,8 @@
                             <td>{{ e. }}</td>
                             <td>{{ e. }}</td>
                             <td>
-                                <a href="{% url 'Taskscontroller:update_client' pk=forloop.counter %}" class="btn btn-sm btn-neutral">แก้ไข</a>
-                                <a href="{% url 'Taskscontroller:delete_client' pk=forloop.counter %}" onclick="deleted()"><button type="button" class="btn btn-sm btn-square btn-danger"><i class="bi bi-trash"></i>
+                                <a href="{% url 'AccountTask:update_client' pk=forloop.counter %}" class="btn btn-sm btn-neutral">แก้ไข</a>
+                                <a href="{% url 'AccountTask:delete_client' pk=forloop.counter %}" onclick="deleted()"><button type="button" class="btn btn-sm btn-square btn-danger"><i class="bi bi-trash"></i>
                             </button></a>
                             </td>
                         </tr>

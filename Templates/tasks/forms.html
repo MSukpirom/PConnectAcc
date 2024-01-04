@@ -42,7 +42,7 @@
             $('#province').change(function() {
                 $("#district").empty()
                 $.ajax({
-                    url: '{% url 'Taskscontroller:GetDistrict' %}',
+                    url: '{% url 'AccountTask:GetDistrict' %}',
                     data: {province_id: $(this).val()
                     },
                     success: function(data) {
@@ -56,7 +56,7 @@
             $('#district').change(function() {
                 $('#subdistrict').empty()
                 $.ajax({
-                    url : '{% url 'Taskscontroller:GetSubdistrict' %}',
+                    url : '{% url 'AccountTask:GetSubdistrict' %}',
                     data: {district_id: $(this).val()},
                     success: function(data) {
                         $('#subdistrict').append('<option value selected disabled hidden>ตำบล</option>')

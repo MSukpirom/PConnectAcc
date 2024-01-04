@@ -5,7 +5,7 @@
     <div class="row">
         <div class="card w-100">
             <div class="card-body p-4">
-                <form id="form1" action="{% url 'Taskscontroller:client_create' %}" method="post">
+                <form id="form1" action="{% url 'AccountTask:client_create' %}" method="post">
                     {% csrf_token %}
                     <!--Client-->
                     <h4 class="fw-semibold mb-4">เพิ่มข้อมูลลูกค้า</h4>
@@ -14,16 +14,14 @@
                             <label for="" class="form-label fw-semibold">วันที่สร้าง
                                 <a class="badge bg-dark text-white ms-2">วันที่อัตโนมัติ </a>
                             </label>
-                            <input type="date" name="c_create_client_date" id="c_create_client_date"
-                                class="form-control" />
+                            <input type="date" name="c_create_client_date" id="c_create_client_date" class="form-control" />
                         </div>
-                        <div class="col-md-6"></div>
-                        <div class="col-md-4">
-                            <label for="" class="form-check-label fw-semibold">สถานะ</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input class="form-check-input" type="radio" name="c_status" value="1" checked />&nbsp;
-                            <label class="form-check-label">เปิด</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input class="form-check-input" type="radio" name="c_status" value="2" />&nbsp;
-                            <label class="form-check-label">ปิด</label>
+                        <div class="col-md-9"></div>
+                        <div class="col-md-1">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="statusSwitch" checked>
+                                <label class="form-check-label" for="statusSwitch">สถานะ</label>
+                            </div>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -88,24 +86,22 @@
                     <!--Tax Register-->
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <label
-                                class="form-label fw-semibold">จดทะเบียนภาษีมูลค่าเพิ่ม</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="r_vat" class="form-check-input" value="ใช่" />&nbsp;
+                            <label class="form-label fw-semibold">จดทะเบียนภาษีมูลค่าเพิ่ม</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="r_vat" class="form-check-input" value="ใช่" onchange="handleVatChange()">&nbsp;
                             <label class="form-check-label" for="">ใช่</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="r_vat" class="form-check-input" value="ไม่ใช่" />&nbsp; <label
-                                class="form-check-label" for="">ไม่ใช่</label><br />
+                            <input type="radio" name="r_vat" class="form-check-input" value="ไม่ใช่" onchange="handleVatChange()">&nbsp;
+                            <label class="form-check-label" for="">ไม่ใช่</label><br />
                             <label class="form-check-label" for="">วันที่จด</label>
                             <input type="date" name="r_vat_date" id="r_vat_date" class="form-control" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <label
-                                class="form-label fw-semibold">จดทะเบียนภาษีธุรกิจเฉพาะ</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="r_sbt" class="form-check-input" value="ใช่" />&nbsp;
+                            <label class="form-label fw-semibold">จดทะเบียนภาษีธุรกิจเฉพาะ</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="r_sbt" class="form-check-input" value="ใช่" onchange="handleSbtChange()">&nbsp;
                             <label class="form-check-label" for="">ใช่</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="r_sbt" class="form-check-input" value="ไม่ใช่" />&nbsp; <label
-                                class="form-check-label" for="">ไม่ใช่</label><br />
+                            <input type="radio" name="r_sbt" class="form-check-input" value="ไม่ใช่" onchange="handleSbtChange()">&nbsp; 
+                            <label class="form-check-label" for="">ไม่ใช่</label><br />
                             <label class="form-check-label" for="">วันที่จด</label>
                             <input type="date" name="r_sbt_date" id="r_sbt_date" class="form-control" />
                         </div>
@@ -113,25 +109,23 @@
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label class="form-label fw-semibold">จดทะเบียนนายจ้าง</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="r_sso" class="form-check-input" value="ใช่" />&nbsp;
+                            <input type="radio" name="r_sso" class="form-check-input" value="ใช่" onchange="handleSsoChange()">&nbsp;
                             <label class="form-check-label" for="">ใช่</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="r_sso" class="form-check-input" value="ไม่ใช่" />&nbsp; <label
-                                class="form-check-label" for="">ไม่ใช่</label><br />
+                            <input type="radio" name="r_sso" class="form-check-input" value="ไม่ใช่" onchange="handleSsoChange()">&nbsp; 
+                            <label class="form-check-label" for="">ไม่ใช่</label><br />
                             <label class="form-check-label" for="">วันที่จด</label>
                             <input type="date" name="r_sso_date" id="r_sso_date" class="form-control" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <label
-                                class="form-label fw-semibold">จดทะเบียนยื่นภาษีออนไลน์</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="r_dbd_e_filling" class="form-check-input" value="ใช่" />&nbsp;
+                            <label class="form-label fw-semibold">จดทะเบียนยื่นภาษีออนไลน์</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="r_dbd_e_filling" class="form-check-input" value="ใช่" onchange="handleDbd_e_fillingChange()">&nbsp;
                             <label class="form-check-label" for="">ใช่</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="r_dbd_e_filling" class="form-check-input" value="ไม่ใช่" />&nbsp;
+                            <input type="radio" name="r_dbd_e_filling" class="form-check-input" value="ไม่ใช่" onchange="handleDbd_e_fillingChange()">&nbsp;
                             <label class="form-check-label" for="">ไม่ใช่</label><br />
                             <label class="form-check-label" for="">วันที่จด</label>
-                            <input type="date" name="r_dbd_e_filling_date" id="r_dbd_e_filling_date"
-                                class="form-control" />
+                            <input type="date" name="r_dbd_e_filling_date" id="r_dbd_e_filling_date" class="form-control" />
                         </div>
                     </div>
 
@@ -197,48 +191,14 @@
                         </div>
                     </div>
                     <br>
-
-                    <!--Password Client-->
-                    <h4 class="fw-semibold mb-4">รหัสผ่านของลูกค้า</h4>
-                    <form id="customerForm">
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <label for="type_password_id" class="form-label fw-semibold">หน่วยงาน :</label>
-                                    <select name="type_password_id" id="type_password_id" class="form-select">
-                                        <option value="" disabled selected>- กรุณาเลือก -</option>
-                                        {% for type_password in register_types %}
-                                        <option value="{{ type_password.id }}">{{ type_password.short_name }} -
-                                            {{ type_password.name_th }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="username" class="form-label fw-semibold">ผู้ใช้งาน :</label>
-                                    <input type="text" class="form-control" name="username" id="username" required>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="password" class="form-label fw-semibold">รหัสผ่าน :</label>
-                                    <input type="password" class="form-control" name="password" id="password" required>
-                                </div>
-                            </div>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button type="button" class="btn btn-dark" onclick="pushData()">เพิ่ม</button>
-                            </div>
-                        </form>
-
-                        <h5 class="fw-semibold mb-4">รายชื่อลูกค้า</h5>
-                        <ul id="customerList"></ul>
-
-                    <br>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-success" type="sumbit" onclick="submitForm()">บันทึกข้อมูล</button>
+                        <button class="btn btn-success" type="submit">บันทึกข้อมูล</button>
                         <button class="btn btn-light" type="reset">ล้างข้อมูล</button>
                     </div>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <a class="btn btn-primary" href="{% url 'AccountTask:client_list' %}" role="button">กลับไปหน้าข้อมูลลูกค้า</a>
+                    </div>
                 </form>
-                <div class="d-grid gap-2 d-md-flex">
-                    <a class="btn btn-primary" href="{% url 'Taskscontroller:client_list' %}" role="button">กลับไปหน้าข้อมูลลูกค้า</a>
-                </div>
-                <br>
             </div>
         </div>
     </div>
@@ -249,7 +209,7 @@
         $('#province').change(function() {
             $("#district").empty()
             $.ajax({
-                url: '{% url 'Taskscontroller:GetDistrict' %}',
+                url: '{% url 'AccountTask:GetDistrict' %}',
                 data: {province_id: $(this).val()
                 },
                 success: function(data) {
@@ -263,7 +223,7 @@
         $('#district').change(function() {
             $('#subdistrict').empty()
             $.ajax({
-                url : '{% url 'Taskscontroller:GetSubdistrict' %}',
+                url : '{% url 'AccountTask:GetSubdistrict' %}',
                 data: {district_id: $(this).val()},
                 success: function(data) {
                     $('#subdistrict').append('<option value selected disabled hidden>ตำบล/แขวง</option>')
@@ -278,7 +238,7 @@
         $('#province2').change(function() {
             $("#district2").empty()
             $.ajax({
-                url: '{% url 'Taskscontroller:GetDistrict' %}',
+                url: '{% url 'AccountTask:GetDistrict' %}',
                 data: {province_id: $(this).val()
                 },
                 success: function(data) {
@@ -292,7 +252,7 @@
         $('#district2').change(function() {
             $('#subdistrict2').empty()
             $.ajax({
-                url : '{% url 'Taskscontroller:GetSubdistrict' %}',
+                url : '{% url 'AccountTask:GetSubdistrict' %}',
                 data: {district_id: $(this).val()},
                 success: function(data) {
                     $('#subdistrict2').append('<option value selected disabled hidden>ตำบล/แขวง</option>')
@@ -303,46 +263,91 @@
             })
         })
     });
+
     document.getElementById('c_create_client_date').valueAsDate = new Date();
 
-    function toggleContactAddress() {
-        var companyAddress = document.getElementById('company-address').value;
-        var contatcAddress = document.getElementById('contact-address');
-        var sameAsCompanyCheckbox = document.getElementById('same-as-company');
+    $('#same-as-company').change(function () {
+        var companyAddress = $('#company-address').val();
+        var contactAddress = $('#contact-address');
+        contactAddress.val(this.checked ? companyAddress : '');
+        contactAddress.prop('disabled', this.checked);
+    });
 
-        if (sameAsCompanyCheckbox.checked) {
-            contatcAddress.value = companyAddress;
-        } else {
-            contatcAddress.value = '';
+    function handleVatChange() {
+        var vatDateInput = document.getElementById("r_vat_date");
+        var vatRadioOptions = document.getElementsByName("r_vat");
+
+        for (var i = 0; i < vatRadioOptions.length; i++) {
+            if (vatRadioOptions[i].checked) {
+                if (vatRadioOptions[i].value === "ใช่") {
+                    vatDateInput.disabled = false;
+                } else {
+                    vatDateInput.disabled = true;
+                    vatDateInput.value = "";
+                }
+                break;
+            }
         }
-        contatcAddress.disabled = sameAsCompanyCheckbox.checked;
     }
 
-    function pushData() {
-        var typePasswordId = document.getElementById('type_password_id').value;
-        var username = document.getElementById('username').value;
-        var password = document.getElementById('password').value;
+    function handleSbtChange() {
+        var sbtDateInput = document.getElementById("r_sbt_date");
+        var sbtRadioOptions = document.getElementsByName("r_sbt");
 
-        var selectedType = register_types.find(function (type) {
-            return type.id == typePasswordId;
+        for (var i = 0; i < sbtRadioOptions.length; i++) {
+            if (sbtRadioOptions[i].checked) {
+                if (sbtRadioOptions[i].value === "ใช่") {
+                    sbtDateInput.disabled = false;
+                } else {
+                    sbtDateInput.disabled = true;
+                    sbtDateInput.value = "";
+                }
+                break;
+            }
+        }
+    }
+
+    function handleSsoChange() {
+        var ssoDateInput = document.getElementById("r_sso_date");
+        var ssoRadioOptions = document.getElementsByName("r_sso");
+
+        for (var i = 0; i < ssoRadioOptions.length; i++) {
+            if (ssoRadioOptions[i].checked) {
+                if (ssoRadioOptions[i].value === "ใช่") {
+                    ssoDateInput.disabled = false;
+                } else {
+                    ssoDateInput.disabled = true;
+                    ssoDateInput.value = "";
+                }
+                break;
+            }
+        }
+    }
+
+    function handleDbd_e_fillingChange() {
+        var dbd_e_fillingDateInput = document.getElementById("r_dbd_e_filling_date");
+        var dbd_e_fillingRadioOptions = document.getElementsByName("r_dbd_e_filling");
+
+        for (var i = 0; i < dbd_e_fillingRadioOptions.length; i++) {
+            if (dbd_e_fillingRadioOptions[i].checked) {
+                if (dbd_e_fillingRadioOptions[i].value === "ใช่") {
+                    dbd_e_fillingDateInput.disabled = false;
+                } else {
+                    dbd_e_fillingDateInput.disabled = true;
+                    dbd_e_fillingDateInput.value = "";
+                }
+                break;
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        $('#statusSwitch').on('change', function () {
+            var isChecked = $(this).is(':checked');
+            var valueToSend = isChecked ? 'เปิด' : 'ปิด';
+
+            console.log('สถานะ:', valueToSend);
         });
-
-        if (selectedType) {
-            var concatenatedValue = selectedType.short_name + ' ' + selectedType.name_th;
-
-            var listItem = document.createElement('li');
-            listItem.textContent = 'หน่วยงาน: ' + concatenatedValue + ', ผู้ใช้งาน: ' + username + ', รหัสผ่าน: ' + password;
-
-            document.getElementById('customerList').appendChild(listItem);
-
-            document.getElementById('type_password_id').value = '';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-        } else {
-            alert('รหัสหน่วยงานไม่ถูกต้อง'); // Handle the case when no matching object is found
-        }
-    }
-
-
+    });
 </script>
 {% endblock content %}

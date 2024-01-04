@@ -11779,7 +11779,7 @@ fieldset:disabled .btn {
 }
 @media (min-width: 992px) {
   .content {
-    padding: 2rem 2rem 0.75rem;
+    padding: 1.5rem 1.5rem 0.75rem;
   }
 }
 .navbar-nav .dropdown-menu {

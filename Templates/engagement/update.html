@@ -11,7 +11,7 @@
     <h1>Update Egagement</h1>
 
     <!-- Your form for updating a type of job goes here -->
-    <form method="post" action="{% url 'Taskscontroller:update_egagement' pk=egagement.id %}">
+    <form method="post" action="{% url 'AccountTask:update_egagement' pk=egagement.id %}">
         {% csrf_token %}
         <!-- Your form fields go here, for example: -->
         <label for="">ชื่อลูกค้า</label>
@@ -47,7 +47,7 @@
         <button type="submit">บันทึกการเปลี่ยนแปลง</button>
     </form>
     <!-- Add a button to cancel or navigate back -->
-    <a href="{% url 'Taskscontroller:list_egagement' %}">ยกเลิก และกลับไปหน้ารายการ</a>
+    <a href="{% url 'AccountTask:list_egagement' %}">ยกเลิก และกลับไปหน้ารายการ</a>
 </body>
 
 </html>

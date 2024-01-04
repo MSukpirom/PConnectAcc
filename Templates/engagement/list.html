@@ -5,7 +5,7 @@
             <div class="card-body p-4">
                 <h4 class="fw-semibold mb-4">ข้อมูล Engagement</h4>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a href="{% url 'Taskscontroller:engagement_create'%}">
+                    <a href="{% url 'AccountTask:engagement_create'%}">
                         <button type="button" class="btn btn-success">
                             <i class="fa-solid fa-file-circle-plus"></i>
                             <span>เพิ่ม</span>
@@ -49,10 +49,10 @@
                                     <h6 class="fw-normal">{{ e.status.status }}</h6>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <a href="{% url 'Taskscontroller:client_update' pk=forloop.counter %}" class="btn btn-sm btn-neutral">
+                                    <a href="{% url 'AccountTask:client_update' pk=forloop.counter %}" class="btn btn-sm btn-neutral">
                                         <button type="button" class="btn btn-outline-warning fw-normal">แก้ไข</button>
                                     </a>
-                                    <a href="{% url 'Taskscontroller:delete_client' pk=forloop.counter %}" onclick="deleted()">
+                                    <a href="{% url 'AccountTask:delete_client' pk=forloop.counter %}" onclick="deleted()">
                                         <i class="fa-solid fa-trash-can fa-lg" style="color: #ff0000;"></i>
                                     </a>
                                 </td>

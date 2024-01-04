@@ -6,7 +6,7 @@
         <div class="card w-100">
             <div class="card-body p-4">
                 <h4 class="fw-semibold mb-4">รหัสผ่านของ {{ client.company_name }}</h4>
-                <form id="crudForm" method="post" action="{% url 'Taskscontroller:client_password' client.id %}">
+                <form id="crudForm" method="post" action="{% url 'AccountTask:client_password' client.id %}">
                     {% csrf_token %}
                     <div class="row mb-3">
                         <div class="col-md-12">
@@ -62,7 +62,7 @@
                                                 <td>
                                                     <!-- Update Form -->
                                                     Debug: {{ client.id }}
-                                                    <form method="post" action="{% url 'Taskscontroller:client_password' client_id=client.id %}">
+                                                    <form method="post" action="{% url 'AccountTask:client_password' client_id=client.id %}">
 
                                                         {% csrf_token %}
                                                         <input type="hidden" name="update_id" value="{{ pw_entry.id }}">
@@ -73,7 +73,7 @@
                                                     </form>
 
                                                     <!-- Delete Form -->
-                                                    <form method="post" action="{% url 'Taskscontroller:client_password' client_id=client.id %}">
+                                                    <form method="post" action="{% url 'AccountTask:client_password' client_id=client.id %}">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="delete_id" value="{{ pw_entry.id }}">
                                                         <button type="submit" class="btn btn-outline-danger btn-sm" name="delete"><i class="fa-solid fa-trash-can"></i></button>

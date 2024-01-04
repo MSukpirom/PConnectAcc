@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modals - ConnectAcc Dashboard</title>
+  <title>Modals - ConnectAcc dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'src/tailwind.output.css' %}">
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -25,21 +25,21 @@
         <ul class="mt-6">
           <li class="relative px-6 py-3">
             <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="{% url 'Taskscontroller:Dashboard' %}">
+              href="{% url 'AccountTask:dashboard' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
                 </path>
               </svg>
-              <span class="ml-4">Dashboard</span>
+              <span class="ml-4">dashboard</span>
             </a>
           </li>
         </ul>
         <ul>
           <li class="relative px-6 py-3">
             <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="{% url 'Taskscontroller:Forms' %}">
+              href="{% url 'AccountTask:Forms' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -51,7 +51,7 @@
           </li>
           <li class="relative px-6 py-3">
             <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="{% url 'Taskscontroller:Cards' %}">
+              href="{% url 'AccountTask:Cards' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -63,7 +63,7 @@
           </li>
           <li class="relative px-6 py-3">
             <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="{% url 'Taskscontroller:Charts' %}">
+              href="{% url 'AccountTask:Charts' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
@@ -74,7 +74,7 @@
           </li>
           <li class="relative px-6 py-3">
             <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="{% url 'Taskscontroller:Buttons' %}">
+              href="{% url 'AccountTask:Buttons' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -88,7 +88,7 @@
             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
               aria-hidden="true"></span>
             <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-              href="{% url 'Taskscontroller:Modals' %}">
+              href="{% url 'AccountTask:Modals' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -100,7 +100,7 @@
           </li>
           <li class="relative px-6 py-3">
             <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="{% url 'Taskscontroller:Tables' %}">
+              href="{% url 'AccountTask:Tables' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -135,23 +135,23 @@
                 class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
                 aria-label="submenu">
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                  <a class="w-full" href="{% url 'Taskscontroller:Login' %}">Login</a>
+                  <a class="w-full" href="{% url 'AccountTask:Login' %}">Login</a>
                 </li>
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                  <a class="w-full" href="{% url 'Taskscontroller:Create_Account' %}">
+                  <a class="w-full" href="{% url 'AccountTask:Create_Account' %}">
                     Create account
                   </a>
                 </li>
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                  <a class="w-full" href="{% url 'Taskscontroller:Forgot_Pass' %}">
+                  <a class="w-full" href="{% url 'AccountTask:Forgot_Pass' %}">
                     Forgot password
                   </a>
                 </li>
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                  <a class="w-full" href="{% url 'Taskscontroller:Page404' %}">404</a>
+                  <a class="w-full" href="{% url 'AccountTask:Page404' %}">404</a>
                 </li>
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                  <a class="w-full" href="{% url 'Taskscontroller:Blank' %}">Blank</a>
+                  <a class="w-full" href="{% url 'AccountTask:Blank' %}">Blank</a>
                 </li>
               </ul>
             </template>
@@ -186,21 +186,21 @@
         <ul class="mt-6">
           <li class="relative px-6 py-3">
             <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="{% url 'Taskscontroller:Dashboard' %}">
+              href="{% url 'AccountTask:dashboard' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
                 </path>
               </svg>
-              <span class="ml-4">Dashboard</span>
+              <span class="ml-4">dashboard</span>
             </a>
           </li>
         </ul>
         <ul>
           <li class="relative px-6 py-3">
             <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="{% url 'Taskscontroller:Forms' %}">
+              href="{% url 'AccountTask:Forms' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -212,7 +212,7 @@
           </li>
           <li class="relative px-6 py-3">
             <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="{% url 'Taskscontroller:Cards' %}">
+              href="{% url 'AccountTask:Cards' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -224,7 +224,7 @@
           </li>
           <li class="relative px-6 py-3">
             <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="{% url 'Taskscontroller:Charts' %}">
+              href="{% url 'AccountTask:Charts' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
@@ -235,7 +235,7 @@
           </li>
           <li class="relative px-6 py-3">
             <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="{% url 'Taskscontroller:Buttons' %}">
+              href="{% url 'AccountTask:Buttons' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -249,7 +249,7 @@
             <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
               aria-hidden="true"></span>
             <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-              href="{% url 'Taskscontroller:Modals' %}">
+              href="{% url 'AccountTask:Modals' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -261,7 +261,7 @@
           </li>
           <li class="relative px-6 py-3">
             <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-              href="{% url 'Taskscontroller:Tables' %}">
+              href="{% url 'AccountTask:Tables' %}">
               <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                 <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
@@ -296,23 +296,23 @@
                 class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
                 aria-label="submenu">
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                  <a class="w-full" href="{% url 'Taskscontroller:Login' %}">Login</a>
+                  <a class="w-full" href="{% url 'AccountTask:Login' %}">Login</a>
                 </li>
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                  <a class="w-full" href="{% url 'Taskscontroller:Create_Account' %}">
+                  <a class="w-full" href="{% url 'AccountTask:Create_Account' %}">
                     Create account
                   </a>
                 </li>
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                  <a class="w-full" href="{% url 'Taskscontroller:Forgot_Pass' %}">
+                  <a class="w-full" href="{% url 'AccountTask:Forgot_Pass' %}">
                     Forgot password
                   </a>
                 </li>
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                  <a class="w-full" href="{% url 'Taskscontroller:Page404' %}">404</a>
+                  <a class="w-full" href="{% url 'AccountTask:Page404' %}">404</a>
                 </li>
                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                  <a class="w-full" href="{% url 'Taskscontroller:Blank' %}">Blank</a>
+                  <a class="w-full" href="{% url 'AccountTask:Blank' %}">Blank</a>
                 </li>
               </ul>
             </template>

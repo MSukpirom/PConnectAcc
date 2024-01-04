@@ -1,0 +1,21 @@
+<!-- client_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client List</title>
+</head>
+<body>
+
+    <h1>Client List</h1>
+
+    <ul>
+        {% for client in clients %}
+            <li><a href="{% url 'AccountTask:client_detail' client.id %}">{{ client.company_name }}</a></li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

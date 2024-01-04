@@ -9,7 +9,7 @@
 
 <body>
     <h1>แก้ไขหมวด และประเภท</h1>
-    <form method="post" action="{% url 'Taskscontroller:update_type_job' pk=document_type.id %}" id="createTypeJobForm">
+    <form method="post" action="{% url 'AccountTask:update_type_job' pk=document_type.id %}" id="createTypeJobForm">
         {% csrf_token %}
 
         <label for="acc_category">หมวดงาน</label>
@@ -23,7 +23,7 @@
 
         <button type="submit">บันทึก</button>
     </form>
-    <a href="{% url 'Taskscontroller:list_type_job' %}">ยกเลิก และย้อนกลับ</a>
+    <a href="{% url 'AccountTask:list_type_job' %}">ยกเลิก และย้อนกลับ</a>
 </body>
 
 </html>

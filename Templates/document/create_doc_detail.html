@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>รายละเอียดเอกสาร</h1>
-    <form method="post" action="{% url 'Taskscontroller:create_document_detail' %}">
+    <form method="post" action="{% url 'AccountTask:create_document_detail' %}">
         {% csrf_token %}
 
         <label for="document_type_id">เอกสาร</label>
@@ -38,6 +38,6 @@
         <button type="submit">บันทึก</button>
     </form>
 
-    <a href="{% url 'Taskscontroller:list_document_detail' %}">ยกเลิก และย้อนกลับ</a>
+    <a href="{% url 'AccountTask:list_document_detail' %}">ยกเลิก และย้อนกลับ</a>
 </body>
 </html>

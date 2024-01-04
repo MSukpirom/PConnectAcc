@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>ประเภทงาน และหมวด</h1>
-    <a href="{% url 'Taskscontroller:create_type_job' %}">เพิ่ม</a>
+    <a href="{% url 'AccountTask:create_type_job' %}">เพิ่ม</a>
     <h3>รายละเอียด</h3>
     <table>
         <thead>
@@ -25,10 +25,10 @@
                     <td>{{ document_type.name_th }}</td>
                     <td>{{ document_type.account_category.name_th }}</td>
                     <td>
-                        <a href="{% url 'Taskscontroller:update_type_job' pk=document_type.id %}" onclick="updated()">แก้ไข</a>
+                        <a href="{% url 'AccountTask:update_type_job' pk=document_type.id %}" onclick="updated()">แก้ไข</a>
                     </td>
                     <td>
-                        <a href="{% url 'Taskscontroller:delete_type_job' pk=document_type.id %}" onclick="deleted()">ลบ</a>
+                        <a href="{% url 'AccountTask:delete_type_job' pk=document_type.id %}" onclick="deleted()">ลบ</a>
                     </td>
                 </tr>
             {% endfor %}

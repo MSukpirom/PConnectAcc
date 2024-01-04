@@ -9,7 +9,7 @@
 
 <body>
     <h1>สร้างหมวด และประเภท</h1>
-    <form method="post" action="{% url 'Taskscontroller:create_type_job' %}" id="createTypeJobForm">
+    <form method="post" action="{% url 'AccountTask:create_type_job' %}" id="createTypeJobForm">
         {% csrf_token %}
 
         <label for="acc_category">หมวดงาน</label>
@@ -31,7 +31,7 @@
         <button type="submit">สร้างเอกสาร</button>
     </form>
 
-    <a href="{% url 'Taskscontroller:list_type_job' %}">ยกเลิก และย้อนกลับ</a>
+    <a href="{% url 'AccountTask:list_type_job' %}">ยกเลิก และย้อนกลับ</a>
 
     <script>
         function toggleNewCategoryInput() {

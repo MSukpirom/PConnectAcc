@@ -62,7 +62,7 @@
             <div class="flex space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
               <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                aria-current="page">Dashboard</a>
+                aria-current="page">dashboard</a>
               <a href="#"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Team</a>
               <a href="#"
@@ -129,7 +129,7 @@
       <div class="space-y-1 px-2 pb-3 pt-2">
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
         <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-          aria-current="page">Dashboard</a>
+          aria-current="page">dashboard</a>
         <a href="#"
           class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
         <a href="#"
@@ -149,16 +149,16 @@
       </span>
       <ul class="ml-auto mr-8 hidden items-center gap-6 lg:flex">
         <li class="block p-1 font-sans font-semibold leading-semibold text-inherit antialiased">
-          <a class="flex items-center" href="{% url 'Taskscontroller:RegisterForm' %}">ข้อมูลลูกค้า</a>
+          <a class="flex items-center" href="{% url 'AccountTask:RegisterForm' %}">ข้อมูลลูกค้า</a>
         </li>
         <li class="block p-1 font-sans font-semibold leading-semibold text-inherit antialiased">
-          <a class="flex items-center" href="{% url 'Taskscontroller:RegisterEgagement' %}">ข้อมูลการว่าจ้าง</a>
+          <a class="flex items-center" href="{% url 'AccountTask:RegisterEgagement' %}">ข้อมูลการว่าจ้าง</a>
         </li>
         <li class="block p-1 font-sans font-semibold leading-semibold text-inherit antialiased">
-          <a class="flex items-center" href="{% url 'Taskscontroller:TasksControl' %}">ติดตามงาน</a>
+          <a class="flex items-center" href="{% url 'AccountTask:TasksControl' %}">ติดตามงาน</a>
         </li>
         <li class="block p-1 font-sans font-semibold leading-semibold text-inherit antialiased">
-          <a class="flex items-center" href="#">Dashboard</a>
+          <a class="flex items-center" href="#">dashboard</a>
         </li>
       </ul>
       <button type="button"

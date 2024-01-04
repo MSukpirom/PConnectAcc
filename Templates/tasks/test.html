@@ -2,7 +2,7 @@
 {% block content %}
     <div class="card card-side bg-base-100 shadow-xl m-7">
         <div class="card-body">
-            <form action="{% url 'Taskscontroller:RegisterForm' %}" method="post">
+            <form action="{% url 'AccountTask:RegisterForm' %}" method="post">
             {% csrf_token %}
                 <label for="">ลูกค้า</label>
 
@@ -194,7 +194,7 @@
     <script type="text/javascript">
         $(function() {
             $.ajax({
-                url: '{% url 'Taskscontroller:GetProvince' %}',
+                url: '{% url 'AccountTask:GetProvince' %}',
                 success: function(data) {
                     var $selectProvince = $('#province');
                     $selectProvince.empty();
@@ -214,7 +214,7 @@
                 if (selectedProvinceId) {
                     // Load districts based on the selected province
                     $.ajax({
-                        url: '{% url 'Taskscontroller:GetDistrict' %}',
+                        url: '{% url 'AccountTask:GetDistrict' %}',
                         data: { province_id: selectedProvinceId },
                         success: function(data) {
                             var $selectDistrict = $('#district');
@@ -241,7 +241,7 @@
                 if (selectedDistrictId) {
                     // Load subdistricts based on the selected district
                     $.ajax({
-                        url: '{% url 'Taskscontroller:GetSubdistrict' %}',
+                        url: '{% url 'AccountTask:GetSubdistrict' %}',
                         data: { district_id: selectedDistrictId },
                         success: function(data) {
                             var $selectSubdistrict = $('#subdistrict');

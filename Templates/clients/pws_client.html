@@ -5,7 +5,7 @@
         <div class="card w-100">
             <div class="card-body p-4">
                 <h4 class="fw-semibold mb-4">รหัสผ่านของ {{ client.company_name }}</h4>
-                <form id="crudForm" method="post" action="{% url 'Taskscontroller:client_password' client.id %}">
+                <form id="crudForm" method="post" action="{% url 'AccountTask:client_password' client.id %}">
                         {% csrf_token %}
                         <div class="row mb-3">
                             <div class="col-md-12">
@@ -61,10 +61,10 @@
                                             <td>{{ pw_entry.password }}</td>
                                             <td>
                                                 {% comment %} <form method="post"
-                                                    action="{% url 'Taskscontroller:client_password' client_id=client.id %}">
+                                                    action="{% url 'AccountTask:client_password' client_id=client.id %}">
                                                     {% endcomment %}
                                                     <form method="post"
-                                                        action="{% url 'Taskscontroller:client_password' client_id=client.id %}">
+                                                        action="{% url 'AccountTask:client_password' client_id=client.id %}">
                                                         {% csrf_token %}
                                                         <div class="row mb-3">
                                                             <input type="hidden" class="form-control" name="update_id"
@@ -89,10 +89,10 @@
                                                         </div>
                                                     </form>
                                                     {% comment %} <form method="post"
-                                                        action="{% url 'Taskscontroller:client_password' client_id=client.id %}">
+                                                        action="{% url 'AccountTask:client_password' client_id=client.id %}">
                                                         {% endcomment %}
                                                         <form method="post"
-                                                            action="{% url 'Taskscontroller:client_password' client_id=client.id %}">
+                                                            action="{% url 'AccountTask:client_password' client_id=client.id %}">
                                                             {% csrf_token %}
                                                             <div class="row mb-3">
                                                                 <input type="hidden" class="form-control"

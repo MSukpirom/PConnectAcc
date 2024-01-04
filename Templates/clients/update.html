@@ -7,7 +7,7 @@
         <div class="card w-100">
             <div class="card-body p-4">
                 <h4 class="fw-semibold mb-4">แก้ข้อมูลลูกค้า</h4>
-                <form method="post" action="{% url 'Taskscontroller:client_update' pk=client.id %}">
+                <form method="post" action="{% url 'AccountTask:client_update' pk=client.id %}">
                     {% csrf_token %}
                     <!--Client-->
                     <div class="row mb-3">
@@ -251,7 +251,7 @@
                         <button class="btn btn-primary me-md-2" type="sumbit">บันทึกข้อมูล</button>
                     </div>
                     <div class="d-grid gap-2 d-md-block">
-                        <a class="btn btn-dark" href="{% url 'Taskscontroller:client_list' %}" role="button">กลับไปหน้าข้อมูลลูกค้า</a>
+                        <a class="btn btn-dark" href="{% url 'AccountTask:client_list' %}" role="button">กลับไปหน้าข้อมูลลูกค้า</a>
                     </div>
                 </form>
                 
@@ -264,7 +264,7 @@
         $('#province').change(function() {
             $("#district").empty()
             $.ajax({
-                url: '{% url 'Taskscontroller:GetDistrict' %}',
+                url: '{% url 'AccountTask:GetDistrict' %}',
                 data: {province_id: $(this).val()
                 },
                 success: function(data) {
@@ -278,7 +278,7 @@
         $('#district').change(function() {
             $('#subdistrict').empty()
             $.ajax({
-                url : '{% url 'Taskscontroller:GetSubdistrict' %}',
+                url : '{% url 'AccountTask:GetSubdistrict' %}',
                 data: {district_id: $(this).val()},
                 success: function(data) {
                     $('#subdistrict').append('<option value selected disabled hidden>ตำบล/แขวง</option>')
@@ -293,7 +293,7 @@
         $('#province2').change(function() {
             $("#district2").empty()
             $.ajax({
-                url: '{% url 'Taskscontroller:GetDistrict' %}',
+                url: '{% url 'AccountTask:GetDistrict' %}',
                 data: {province_id: $(this).val()
                 },
                 success: function(data) {
@@ -307,7 +307,7 @@
         $('#district2').change(function() {
             $('#subdistrict2').empty()
             $.ajax({
-                url : '{% url 'Taskscontroller:GetSubdistrict' %}',
+                url : '{% url 'AccountTask:GetSubdistrict' %}',
                 data: {district_id: $(this).val()},
                 success: function(data) {
                     $('#subdistrict2').append('<option value selected disabled hidden>ตำบล/แขวง</option>')
